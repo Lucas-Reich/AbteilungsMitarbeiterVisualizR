@@ -1,13 +1,24 @@
 import java.util.List;
 
 public interface IDatenhaltung {
-    void save(Object object);
+    void saveAbteilung(Abteilung abteilung);
 
-    Object get(long id);
+    Abteilung getAbteilung(long id);
 
-    List<Object> getAll();
+    List<Abteilung> getAllAbteilungen();
 
-    void update(Object object);
+    void updateAbteilung(Abteilung abteilung);
 
-    void delete(long id);
+    void deleteAbteilung(long abteilungId);
+
+
+    void saveMitarbeiter(Mitarbeiter mitarbeiter);
+
+    Mitarbeiter getMitarbeiter(long id);
+
+    List<Mitarbeiter> getAllMitarbeiter();
+
+    void updateMitarbeiter(Abteilung mitarbeiter);
+
+    void deleteMitarbeiter(long mitarbeiterId);
 }

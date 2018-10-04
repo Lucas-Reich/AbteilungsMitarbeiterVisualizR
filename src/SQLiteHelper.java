@@ -1,28 +1,53 @@
 import java.util.List;
 
-public class SQLiteHelper implements  IDatenhaltung{
+public class SQLiteHelper implements  IDatenhaltung {
     @Override
-    public void save(Object object) {
+    public void saveAbteilung(Abteilung abteilung) {
 
     }
 
     @Override
-    public Object get(long id) {
+    public Abteilung getAbteilung(long id) {
         return null;
     }
 
     @Override
-    public List<Object> getAll() {
+    public List<Abteilung> getAllAbteilungen() {
         return null;
     }
 
     @Override
-    public void update(Object object) {
+    public void updateAbteilung(Abteilung abteilung) {
 
     }
 
     @Override
-    public void delete(long id) {
+    public void deleteAbteilung(long abteilungId) {
+
+    }
+
+    @Override
+    public void saveMitarbeiter(Mitarbeiter mitarbeiter) {
+
+    }
+
+    @Override
+    public Mitarbeiter getMitarbeiter(long id) {
+        return null;
+    }
+
+    @Override
+    public List<Mitarbeiter> getAllMitarbeiter() {
+        return null;
+    }
+
+    @Override
+    public void updateMitarbeiter(Abteilung mitarbeiter) {
+
+    }
+
+    @Override
+    public void deleteMitarbeiter(long mitarbeiterId) {
 
     }
 }
