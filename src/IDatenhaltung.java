@@ -12,13 +12,13 @@ public interface IDatenhaltung {
     void deleteAbteilung(long abteilungId);
 
 
-    void saveMitarbeiter(Mitarbeiter mitarbeiter);
+    void saveMitarbeiter(Mitarbeiter mitarbeiter, long abteilungId);
 
     Mitarbeiter getMitarbeiter(long id);
 
     List<Mitarbeiter> getAllMitarbeiter();
 
-    void updateMitarbeiter(Abteilung mitarbeiter);
+    void updateMitarbeiter(Mitarbeiter mitarbeiter);
 
     void deleteMitarbeiter(long mitarbeiterId);
 }
