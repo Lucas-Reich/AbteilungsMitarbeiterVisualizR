@@ -1,78 +1,39 @@
-import java.sql.*;
-import java.util.List;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-public class SQLiteHelper implements IDatenhaltung {
-    private Connection mConn;
+public class SQLiteHelper {
+    public static final String TABLE_DEPARTMENTS = "departments";
+    public static final String DEPARTMENT_COL_ID = "id";
+    public static final String DEPARTMENT_COL_NAME = "name";
+    private static final String CREATE_DEPARTMENTS_TABLE = ""
+            + "CREATE TABLE IF NOT EXISTS ("
+            + TABLE_DEPARTMENTS + " "
+            + DEPARTMENT_COL_ID + " INTEGER PRIMARY KEY"
+            + DEPARTMENT_COL_NAME + " TEXT NOT NULL"
+            + ")";
 
-    public SQLiteHelper() {
+    public static final String TABLE_EMPLOYEES = "employee";
+    public static final String EMPLOYEE_COL_ID = "id";
+    public static final String EMPLOYEE_COL_NAME = "name";
+    public static final String EMPLOYEE_COL_DEPARTMENT_ID = "department_id";
+    private static final String CREATE_EMPLOYEE_TABLE = ""
+            + "CREATE TABLE IF NOT EXISTS ("
+            + TABLE_EMPLOYEES + " "
+            + EMPLOYEE_COL_ID + " INTEGER PRIMARY KEY, "
+            + EMPLOYEE_COL_NAME + " TEXT NOT NULL, "
+            + EMPLOYEE_COL_DEPARTMENT_ID + " INTEGER NOT NULL"
+            + ")";
 
-        String url = "jdbc:sqlite:C://sqlite/db/test.db";
-        Connection conn = null;
+
+    public void createDatabase(Connection connection) {
         try {
-            conn = DriverManager.getConnection(url);
+            Statement stmt = connection.createStatement();
+            stmt.execute(CREATE_DEPARTMENTS_TABLE);
+            stmt.execute(CREATE_EMPLOYEE_TABLE);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+
+            //todo do smth
         }
-
-        mConn = conn;
-    }
-
-    private long getIdForAbteilung(Abteilung mit) {
-      "SELECT id from Mitarbeiter where name = "
-    }
-
-    @Override
-    public void saveAbteilung(Abteilung abteilung) {
-
-        PreparedStatement stmt = mConn.prepareStatement("");
-        long id = getIdForAbteilung(abteilung);
-        return new Abteilung(
-                id
-        );
-    }
-
-    @Override
-    public Abteilung getAbteilung(long id) {
-        return null;
-    }
-
-    @Override
-    public List<Abteilung> getAllAbteilungen() {
-        return null;
-    }
-
-    @Override
-    public void updateAbteilung(Abteilung abteilung) {
-
-    }
-
-    @Override
-    public void deleteAbteilung(long abteilungId) {
-
-    }
-
-    @Override
-    public void saveMitarbeiter(Mitarbeiter mitarbeiter, long abteilungId) {
-
-    }
-
-    @Override
-    public Mitarbeiter getMitarbeiter(long id) {
-        return null;
-    }
-
-    @Override
-    public List<Mitarbeiter> getAllMitarbeiter() {
-        return null;
-    }
-
-    @Override
-    public void updateMitarbeiter(Mitarbeiter mitarbeiter) {
-
-    }
-
-    @Override
-    public void deleteMitarbeiter(long mitarbeiterId) {
-
     }
 }

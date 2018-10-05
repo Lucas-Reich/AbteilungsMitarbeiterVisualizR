@@ -1,18 +1,18 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Abteilung {
+public class Department {
     private long id;
     private String name;
-    private List<Mitarbeiter> mitarbeiters;
+    private List<Employee> employees;
 
-    public Abteilung(long id, String name) {
+    public Department(long id, String name) {
         setId(id);
         setName(name);
-        mitarbeiters = new ArrayList<>();
+        employees = new ArrayList<>();
     }
 
-    public Abteilung(String name) {
+    public Department(String name) {
         this(-1, name);
     }
 
@@ -32,11 +32,11 @@ public class Abteilung {
         this.name = name;
     }
 
-    public void addMitarbeiter(Mitarbeiter mitarbeiter) {
-        mitarbeiters.add(mitarbeiter);
+    public void addMitarbeiter(Employee employee) {
+        employees.add(employee);
     }
 
-    public List<Mitarbeiter> getMitarbeiters() {
-        return mitarbeiters;
+    public List<Employee> getEmployees() {
+        return employees;
     }
 }

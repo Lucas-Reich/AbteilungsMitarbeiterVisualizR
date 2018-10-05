@@ -25,4 +25,8 @@ public class Main {
             System.out.println(e.getMessage());
         }
     }
+
+    public static void test() {
+        Fachkonzept fachkonzept = new GUI(new XMLHelper());
+    }
 }

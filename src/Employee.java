@@ -1,13 +1,13 @@
-public class Mitarbeiter {
+public class Employee {
     private long id;
     private String name;
 
-    public Mitarbeiter(long id, String name) {
+    public Employee(long id, String name) {
         setId(id);
         setName(name);
     }
 
-    public Mitarbeiter(String name) {
+    public Employee(String name) {
         this(-1, name);
     }
 

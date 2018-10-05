@@ -2,52 +2,52 @@ import java.util.List;
 
 public class XMLHelper implements IDatenhaltung {
     @Override
-    public void saveAbteilung(Abteilung abteilung) {
+    public void saveDepartment(Department department) {
 
     }
 
     @Override
-    public Abteilung getAbteilung(long id) {
+    public Department getDepartment(long id) {
         return null;
     }
 
     @Override
-    public List<Abteilung> getAllAbteilungen() {
+    public List<Department> getAllDepartments() {
         return null;
     }
 
     @Override
-    public void updateAbteilung(Abteilung abteilung) {
+    public void updateDepartment(Department department) {
 
     }
 
     @Override
-    public void deleteAbteilung(long abteilungId) {
+    public void deleteDepartment(long abteilungId) {
 
     }
 
     @Override
-    public void saveMitarbeiter(Mitarbeiter mitarbeiter) {
+    public void saveEmployee(Employee employee, long abteilungId) {
 
     }
 
     @Override
-    public Mitarbeiter getMitarbeiter(long id) {
+    public Employee getEmployee(long id) {
         return null;
     }
 
     @Override
-    public List<Mitarbeiter> getAllMitarbeiter() {
+    public List<Employee> getAllEmployees() {
         return null;
     }
 
     @Override
-    public void updateMitarbeiter(Abteilung mitarbeiter) {
+    public void updateEmployee(Employee employee) {
 
     }
 
     @Override
-    public void deleteMitarbeiter(long mitarbeiterId) {
+    public void deleteEmployee(long mitarbeiterId) {
 
     }
 }
