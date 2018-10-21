@@ -1,4 +1,4 @@
-package implementation.Entities;
+package AbteilungsMitarbeiterVisualizR.Entities;
 
 import java.util.ArrayList;
 import java.util.List;

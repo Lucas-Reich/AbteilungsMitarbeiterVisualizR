@@ -1,8 +1,8 @@
-package implementation.Persistence.XML;
+package AbteilungsMitarbeiterVisualizR.Persistence.XML;
 
-import implementation.Entities.Department;
-import implementation.Entities.Employee;
-import implementation.Persistence.IPersistence;
+import AbteilungsMitarbeiterVisualizR.Entities.Department;
+import AbteilungsMitarbeiterVisualizR.Entities.Employee;
+import AbteilungsMitarbeiterVisualizR.Persistence.IPersistence;
 
 import java.util.List;
 

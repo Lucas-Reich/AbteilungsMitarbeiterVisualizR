@@ -1,10 +1,11 @@
-package implementation.Persistence.SQLite;
+package AbteilungsMitarbeiterVisualizR.Persistence.SQLite;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.io.File;
+import java.sql.*;
 
 public class SQLiteHelper {
+    static final String DATABASE_NAME = "abteilungsMitarbeiterVisualizR.db";
+
     static final String TABLE_DEPARTMENTS = "departments";
     static final String DEPARTMENT_COL_ID = "id";
     static final String DEPARTMENT_COL_NAME = "name";
@@ -27,15 +28,41 @@ public class SQLiteHelper {
             + EMPLOYEE_COL_DEPARTMENT_ID + " INTEGER NOT NULL"
             + ")";
 
+    public static void initializeDatabase() {
+        if (databaseFileExists())
+            return;
 
-    public void createDatabase(Connection connection) {
+        String url = String.format("jdbc:sqlite:%s/%s", getDatabaseDir(), DATABASE_NAME);
+
+        try (Connection con = DriverManager.getConnection(url)) {
+            if (null != con)
+                createTables(con);
+
+        } catch (SQLException e) {
+
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static boolean createTables(Connection connection) {
         try {
             Statement stmt = connection.createStatement();
             stmt.execute(CREATE_DEPARTMENTS_TABLE);
             stmt.execute(CREATE_EMPLOYEE_TABLE);
+
+            return true;
         } catch (SQLException e) {
 
-            //todo do smth
+            return false;
         }
+    }
+
+    private static boolean databaseFileExists() {
+        File file = new File(String.format("%s/%s", getDatabaseDir(), DATABASE_NAME));
+        return file.exists();
+    }
+
+    private static String getDatabaseDir() {
+        return System.getProperty("user.dir") + "/assets/SQLite";
     }
 }

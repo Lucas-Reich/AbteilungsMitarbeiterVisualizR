@@ -1,6 +1,6 @@
-package implementation.Fachkonzept;
+package AbteilungsMitarbeiterVisualizR.Fachkonzept;
 
-import implementation.Persistence.IPersistence;
+import AbteilungsMitarbeiterVisualizR.Persistence.IPersistence;
 
 public class TUI implements Fachkonzept {
     // TODO implement me
