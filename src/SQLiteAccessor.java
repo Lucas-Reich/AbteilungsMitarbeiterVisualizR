@@ -19,15 +19,15 @@ public class SQLiteAccessor implements IDatenhaltung {
 
     private long getIdForDepartment(Department dep) {
         String selectQuery = "SELECT "
-                + DEPARTMENT_COL_ID
-                + " FROM " + TABLE_DEPARTMENTS
-                + " WHERE " + DEPARTMENT_COL_NAME + " = " + dep.getName();
+                + SQLiteHelper.DEPARTMENT_COL_ID
+                + " FROM " + SQLiteHelper.TABLE_DEPARTMENTS
+                + " WHERE " + SQLiteHelper.DEPARTMENT_COL_NAME + " = " + dep.getName();
 
         try {
             Statement stmt = mConn.createStatement();
             ResultSet rs = stmt.executeQuery(selectQuery);
 
-            return rs.getLong(EMPLOYEE_COL_ID);
+            return rs.getLong(SQLiteHelper.EMPLOYEE_COL_ID);
         } catch (SQLException e) {
 
             return -1;
@@ -36,15 +36,15 @@ public class SQLiteAccessor implements IDatenhaltung {
 
     private long getIdForEmployee(Employee emp) {
         String selectQuery = "SELECT "
-                + EMPLOYEE_COL_ID
-                + " FROM " + TABLE_EMPLOYEES
-                + " WHERE " + EMPLOYEE_COL_NAME + " = " + emp.getName();
+                + SQLiteHelper.EMPLOYEE_COL_ID
+                + " FROM " + SQLiteHelper.TABLE_EMPLOYEES
+                + " WHERE " + SQLiteHelper.EMPLOYEE_COL_NAME + " = " + emp.getName();
 
         try {
             Statement stmt = mConn.createStatement();
             ResultSet rs = stmt.executeQuery(selectQuery);
 
-            return rs.getLong(EMPLOYEE_COL_ID);
+            return rs.getLong(SQLiteHelper.EMPLOYEE_COL_ID);
         } catch (SQLException e) {
 
             return -1;
