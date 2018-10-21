@@ -1,9 +1,10 @@
 import java.util.List;
 
 public class XMLHelper implements IDatenhaltung {
-    @Override
-    public void saveDepartment(Department department) {
 
+    @Override
+    public Department saveDepartment(Department department) {
+        return null;
     }
 
     @Override
@@ -27,8 +28,8 @@ public class XMLHelper implements IDatenhaltung {
     }
 
     @Override
-    public void saveEmployee(Employee employee, long abteilungId) {
-
+    public Employee saveEmployee(Employee employee, long abteilungId) {
+        return null;
     }
 
     @Override
