@@ -2,11 +2,11 @@ package implementation.Persistence.XML;
 
 import implementation.Entities.Department;
 import implementation.Entities.Employee;
-import implementation.Persistence.IDatenhaltung;
+import implementation.Persistence.IPersistence;
 
 import java.util.List;
 
-public class XMLHelper implements IDatenhaltung {
+public class XMLHelper implements IPersistence {
     // TODO implement me
 
     @Override
@@ -30,12 +30,12 @@ public class XMLHelper implements IDatenhaltung {
     }
 
     @Override
-    public void deleteDepartment(long abteilungId) {
+    public void deleteDepartment(long departmentId) {
 
     }
 
     @Override
-    public Employee saveEmployee(Employee employee, long abteilungId) {
+    public Employee saveEmployee(Employee employee, long departmentId) {
         return null;
     }
 
@@ -55,7 +55,7 @@ public class XMLHelper implements IDatenhaltung {
     }
 
     @Override
-    public void deleteEmployee(long mitarbeiterId) {
+    public void deleteEmployee(long employeeId) {
 
     }
 }

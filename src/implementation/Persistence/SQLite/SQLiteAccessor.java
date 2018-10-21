@@ -2,13 +2,13 @@ package implementation.Persistence.SQLite;
 
 import implementation.Entities.Department;
 import implementation.Entities.Employee;
-import implementation.Persistence.IDatenhaltung;
+import implementation.Persistence.IPersistence;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SQLiteAccessor implements IDatenhaltung {
+public class SQLiteAccessor implements IPersistence {
     private Connection mConn;
 
     public SQLiteAccessor() {
@@ -152,10 +152,10 @@ public class SQLiteAccessor implements IDatenhaltung {
     }
 
     @Override
-    public void deleteDepartment(long id) {
+    public void deleteDepartment(long departmentId) {
         String deleteQuery = "DELETE FROM "
                 + SQLiteHelper.TABLE_DEPARTMENTS
-                + " WHERE " + SQLiteHelper.DEPARTMENT_COL_ID + " = " + id;
+                + " WHERE " + SQLiteHelper.DEPARTMENT_COL_ID + " = " + departmentId;
 
         try {
             Statement stmt = mConn.createStatement();
@@ -249,10 +249,10 @@ public class SQLiteAccessor implements IDatenhaltung {
     }
 
     @Override
-    public void deleteEmployee(long id) {
+    public void deleteEmployee(long employeeId) {
         String deleteQuery = "DELETE FROM "
                 + SQLiteHelper.TABLE_EMPLOYEES
-                + " WHERE " + SQLiteHelper.EMPLOYEE_COL_ID + " = " + id
+                + " WHERE " + SQLiteHelper.EMPLOYEE_COL_ID + " = " + employeeId
                 + ";";
 
         try {

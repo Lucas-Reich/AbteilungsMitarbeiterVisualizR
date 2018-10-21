@@ -1,10 +1,10 @@
 package implementation.Fachkonzept;
 
-import implementation.Persistence.IDatenhaltung;
+import implementation.Persistence.IPersistence;
 
 public class GUI implements Fachkonzept {
     // TODO implement me
-    public GUI(IDatenhaltung persistence) {
+    public GUI(IPersistence persistence) {
 
     }
 }

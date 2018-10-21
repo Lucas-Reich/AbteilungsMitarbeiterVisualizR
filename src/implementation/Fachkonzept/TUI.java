@@ -1,10 +1,10 @@
 package implementation.Fachkonzept;
 
-import implementation.Persistence.IDatenhaltung;
+import implementation.Persistence.IPersistence;
 
 public class TUI implements Fachkonzept {
     // TODO implement me
-    public TUI(IDatenhaltung persistence) {
+    public TUI(IPersistence persistence) {
 
     }
 }

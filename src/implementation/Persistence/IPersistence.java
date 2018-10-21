@@ -5,7 +5,7 @@ import implementation.Entities.Employee;
 
 import java.util.List;
 
-public interface IDatenhaltung {
+public interface IPersistence {
     Department saveDepartment(Department department);
 
     Department getDepartment(long id);
@@ -14,10 +14,10 @@ public interface IDatenhaltung {
 
     void updateDepartment(Department department);//TODO: Should we return true or false?
 
-    void deleteDepartment(long abteilungId);//TODO: Should we return true or false?
+    void deleteDepartment(long departmentId);//TODO: Should we return true or false?
 
 
-    Employee saveEmployee(Employee employee, long abteilungId);
+    Employee saveEmployee(Employee employee, long departmentId);
 
     Employee getEmployee(long id);
 
@@ -25,5 +25,5 @@ public interface IDatenhaltung {
 
     void updateEmployee(Employee employee);
 
-    void deleteEmployee(long mitarbeiterId);
+    void deleteEmployee(long employeeId);
 }
