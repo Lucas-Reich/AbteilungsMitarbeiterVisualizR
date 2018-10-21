@@ -6,6 +6,7 @@ import java.sql.SQLException;
 public class Main {
     public static void main(String args[]) {
         System.out.println("Hello World!");
+
         createNewDatabase("test.db");
     }
 
@@ -23,5 +24,9 @@ public class Main {
 
             System.out.println(e.getMessage());
         }
+    }
+
+    public static void test() {
+        Fachkonzept fachkonzept = new GUI(new XMLHelper());
     }
 }

@@ -1,9 +1,24 @@
+import java.util.List;
+
 public interface IDatenhaltung {
-    void save();
+    Department saveDepartment(Department department);
 
-    Object get(long id);
+    Department getDepartment(long id);
 
-    void update(Object object);
+    List<Department> getAllDepartments();
 
-    void delete(long id);
+    void updateDepartment(Department department);//sollten wir ein true oder false zurückgeben?
+
+    void deleteDepartment(long abteilungId);//sollten wir ein true oder false zurückgeben?
+
+
+    Employee saveEmployee(Employee employee, long abteilungId);
+
+    Employee getEmployee(long id);
+
+    List<Employee> getAllEmployees();
+
+    void updateEmployee(Employee employee);
+
+    void deleteEmployee(long mitarbeiterId);
 }
