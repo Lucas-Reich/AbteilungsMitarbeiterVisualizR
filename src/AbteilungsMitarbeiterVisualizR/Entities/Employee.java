@@ -1,4 +1,4 @@
-package implementation.Entities;
+package AbteilungsMitarbeiterVisualizR.Entities;
 
 public class Employee {
     private long id;

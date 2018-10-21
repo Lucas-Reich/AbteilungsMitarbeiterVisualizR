@@ -1,8 +1,8 @@
-package implementation.Persistence.SQLite;
+package AbteilungsMitarbeiterVisualizR.Persistence.SQLite;
 
-import implementation.Entities.Department;
-import implementation.Entities.Employee;
-import implementation.Persistence.IPersistence;
+import AbteilungsMitarbeiterVisualizR.Entities.Department;
+import AbteilungsMitarbeiterVisualizR.Entities.Employee;
+import AbteilungsMitarbeiterVisualizR.Persistence.IPersistence;
 
 import java.sql.*;
 import java.util.ArrayList;

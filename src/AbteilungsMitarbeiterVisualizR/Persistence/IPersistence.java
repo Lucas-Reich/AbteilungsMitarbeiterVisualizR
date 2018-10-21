@@ -1,7 +1,7 @@
-package implementation.Persistence;
+package AbteilungsMitarbeiterVisualizR.Persistence;
 
-import implementation.Entities.Department;
-import implementation.Entities.Employee;
+import AbteilungsMitarbeiterVisualizR.Entities.Department;
+import AbteilungsMitarbeiterVisualizR.Entities.Employee;
 
 import java.util.List;
 
