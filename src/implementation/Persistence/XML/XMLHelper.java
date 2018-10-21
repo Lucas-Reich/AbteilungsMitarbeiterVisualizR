@@ -1,6 +1,13 @@
+package implementation.Persistence.XML;
+
+import implementation.Entities.Department;
+import implementation.Entities.Employee;
+import implementation.Persistence.IDatenhaltung;
+
 import java.util.List;
 
 public class XMLHelper implements IDatenhaltung {
+    // TODO implement me
 
     @Override
     public Department saveDepartment(Department department) {

@@ -1,3 +1,8 @@
+package implementation.Persistence;
+
+import implementation.Entities.Department;
+import implementation.Entities.Employee;
+
 import java.util.List;
 
 public interface IDatenhaltung {
@@ -7,9 +12,9 @@ public interface IDatenhaltung {
 
     List<Department> getAllDepartments();
 
-    void updateDepartment(Department department);//sollten wir ein true oder false zurückgeben?
+    void updateDepartment(Department department);//TODO: Should we return true or false?
 
-    void deleteDepartment(long abteilungId);//sollten wir ein true oder false zurückgeben?
+    void deleteDepartment(long abteilungId);//TODO: Should we return true or false?
 
 
     Employee saveEmployee(Employee employee, long abteilungId);

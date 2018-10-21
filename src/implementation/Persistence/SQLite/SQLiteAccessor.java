@@ -1,3 +1,9 @@
+package implementation.Persistence.SQLite;
+
+import implementation.Entities.Department;
+import implementation.Entities.Employee;
+import implementation.Persistence.IDatenhaltung;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

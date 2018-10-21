@@ -1,9 +1,16 @@
+package implementation;
+
+import implementation.Fachkonzept.Fachkonzept;
+import implementation.Fachkonzept.GUI;
+import implementation.Persistence.XML.XMLHelper;
+
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Main {
+    // TODO refine me
     public static void main(String args[]) {
         System.out.println("Hello World!");
 
