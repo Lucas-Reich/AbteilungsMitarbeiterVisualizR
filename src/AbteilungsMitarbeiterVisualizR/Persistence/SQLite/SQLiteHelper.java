@@ -28,7 +28,7 @@ public class SQLiteHelper {
             + EMPLOYEE_COL_DEPARTMENT_ID + " INTEGER NOT NULL"
             + ")";
 
-    public static void initializeDatabase() {
+    public static void initializeDatabase() { // TODO sollte ich die connection zurückgeben?
         if (databaseFileExists())
             return;
 
@@ -42,6 +42,10 @@ public class SQLiteHelper {
 
             System.out.println(e.getMessage());
         }
+    }
+
+    static String getDatabaseLocation() {
+        return String.format("%s/%s", getDatabaseDir(), DATABASE_NAME);
     }
 
     private static boolean createTables(Connection connection) {

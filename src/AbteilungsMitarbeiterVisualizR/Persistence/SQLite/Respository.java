@@ -8,19 +8,20 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SQLiteAccessor implements IPersistence {
+public class Respository implements IPersistence {
     private Connection mConn;
 
-    public SQLiteAccessor() {
-        String url = "jdbc:sqlite:C://sqlite/db/test.db";
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(url);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+    public boolean connect() {
+        try (Connection con = DriverManager.getConnection(SQLiteHelper.getDatabaseLocation())) {
 
-        mConn = conn;
+            mConn = con;
+            return true;
+        } catch (SQLException e) {
+
+            mConn = null;
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 
     private long getIdForDepartment(Department dep) {
