@@ -15,17 +15,8 @@ public class SQLiteRepository implements IPersistence {
         connect();
     }
 
-    private boolean connect() {
-        try (Connection con = DriverManager.getConnection(SQLiteHelper.getDatabaseLocation())) {
-
-            mConn = con;
-            return true;
-        } catch (SQLException e) {
-
-            mConn = null;
-            System.out.println(e.getMessage());
-            return false;
-        }
+    private void connect() {
+        mConn = SQLiteHelper.getConnection();
     }
 
     private long getIdForDepartment(Department dep) {
@@ -68,7 +59,7 @@ public class SQLiteRepository implements IPersistence {
                 + SQLiteHelper.TABLE_DEPARTMENTS
                 + " (" + SQLiteHelper.DEPARTMENT_COL_NAME + ")"
                 + " VALUES "
-                + " (" + dep.getName() + " );";
+                + " ('" + dep.getName() + "');";
 
         executeQuery(query);
 
@@ -142,7 +133,7 @@ public class SQLiteRepository implements IPersistence {
     public void updateDepartment(Department dep) {
         String updateQuery = "UPDATE "
                 + SQLiteHelper.TABLE_DEPARTMENTS
-                + " SET " + SQLiteHelper.DEPARTMENT_COL_NAME + " = " + dep.getName()
+                + " SET " + SQLiteHelper.DEPARTMENT_COL_NAME + " = '" + dep.getName() + "'"
                 + " WHERE " + SQLiteHelper.DEPARTMENT_COL_ID + " = " + dep.getId()
                 + ";";
 
@@ -176,7 +167,7 @@ public class SQLiteRepository implements IPersistence {
         String insertQuery = "INSERT INTO "
                 + SQLiteHelper.TABLE_EMPLOYEES
                 + "( " + SQLiteHelper.EMPLOYEE_COL_NAME + ", " + SQLiteHelper.EMPLOYEE_COL_DEPARTMENT_ID + ")"
-                + " VALUES (" + emp.getName() + " , " + departmentId + " );";
+                + " VALUES ('" + emp.getName() + "', " + departmentId + ");";
 
         executeQuery(insertQuery);
 
@@ -239,7 +230,7 @@ public class SQLiteRepository implements IPersistence {
     public void updateEmployee(Employee emp) {
         String updateQuery = "UPDATE "
                 + SQLiteHelper.TABLE_EMPLOYEES
-                + " SET " + SQLiteHelper.EMPLOYEE_COL_NAME + " = " + emp.getName()
+                + " SET " + SQLiteHelper.EMPLOYEE_COL_NAME + " = '" + emp.getName() + "'"
                 + " WHERE " + SQLiteHelper.EMPLOYEE_COL_ID + " = " + emp.getId()
                 + ";";
 
