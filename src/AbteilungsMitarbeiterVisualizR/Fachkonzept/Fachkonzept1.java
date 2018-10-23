@@ -4,18 +4,16 @@ import AbteilungsMitarbeiterVisualizR.Entities.Department;
 import AbteilungsMitarbeiterVisualizR.Entities.Employee;
 import AbteilungsMitarbeiterVisualizR.Persistence.IPersistence;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class Fachkonzept1 implements Fachkonzept {
+/**
+ * Fachkonzept1 will return data which is alphabetically (A - Z) sorted.
+ */
+public class Fachkonzept1 implements IFachkonzept {
     private static final String PROJECT_NAME = "AbteilungsMitarbeiterVisualizR";
 
     private IPersistence mPersistence;
-    // TODO Fachkonzept1 gibt die Daten alphabetisch (A-Z) an
-
-    // TODO implement me
 
     public Fachkonzept1(IPersistence persistence) {
         mPersistence = persistence;

@@ -6,10 +6,11 @@ import AbteilungsMitarbeiterVisualizR.Persistence.IPersistence;
 
 import java.util.List;
 
-public class Fachkonzept2 implements Fachkonzept {
+/**
+ * Fachkonzept2 will return data which is reverse alphabetically (Z - A) sorted.
+ */
+public class Fachkonzept2 implements IFachkonzept {
     private IPersistence mPersistence;
-    // TODO Fachkonzept2 gibt die Daten umgekehrt alphabetisch (Z-A) an
-
     // TODO implement me
 
     public Fachkonzept2(IPersistence persistence) {

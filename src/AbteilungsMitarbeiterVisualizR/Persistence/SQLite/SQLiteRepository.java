@@ -8,10 +8,14 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Respository implements IPersistence {
+public class SQLiteRepository implements IPersistence {
     private Connection mConn;
 
-    public boolean connect() {
+    public SQLiteRepository() {
+        connect();
+    }
+
+    private boolean connect() {
         try (Connection con = DriverManager.getConnection(SQLiteHelper.getDatabaseLocation())) {
 
             mConn = con;
