@@ -41,4 +41,16 @@ public class Department {
     public List<Employee> getEmployees() {
         return employees;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Department))
+            return false;
+
+        Department other = (Department) obj;
+
+        return this.getId() == other.getId()
+                && this.getName().equals(other.getName())
+                && this.getEmployees().equals(other.getEmployees());
+    }
 }
