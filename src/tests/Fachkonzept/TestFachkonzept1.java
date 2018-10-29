@@ -1,4 +1,4 @@
-package tests.AbteilungsMitarbeiterVisualizR.Fachkonzept.Fachkonzept;
+package tests.Fachkonzept;
 
 import AbteilungsMitarbeiterVisualizR.Fachkonzept.Fachkonzept1;
 import AbteilungsMitarbeiterVisualizR.Fachkonzept.IFachkonzept;
