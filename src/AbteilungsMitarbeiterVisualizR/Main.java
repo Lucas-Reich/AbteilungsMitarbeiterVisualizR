@@ -16,17 +16,16 @@ public class Main {
         GUI gui = new GUI(new XMLHelper());
         gui.show();
 
+
         SQLiteHelper.initializeDatabase();
         SQLiteRepository sqlite = new SQLiteRepository();
-        Employee employee1 = new Employee("Hans Müller");
-        Employee employee2 = new Employee("Peter Klein");
-        Employee employee3 = new Employee("Ken");
-        Employee employee4 = new Employee("Lucas Reich");
+        Employee employee1 = new Employee("Viktor Yezhov");
+        Employee employee2 = new Employee("Christian Schulz");
+        Employee employee3 = new Employee("Lucas Reich");
         Department department = sqlite.saveDepartment(new Department("Abteilung 1"));
         sqlite.saveEmployee(employee1, department.getId());
         sqlite.saveEmployee(employee2, department.getId());
         sqlite.saveEmployee(employee3, department.getId());
-        sqlite.saveEmployee(employee4, department.getId());
         sqlite.saveDepartment(new Department("Abteilung 2"));
         sqlite.saveDepartment(new Department("Abteilung 3"));
         sqlite.saveDepartment(new Department("Abteilung 4"));

@@ -1,12 +1,10 @@
 package AbteilungsMitarbeiterVisualizR.Persistence.SQLite;
 
-import org.sqlite.SQLiteException;
-
 import java.io.File;
 import java.sql.*;
 
 public class SQLiteHelper {
-    static final String DATABASE_NAME = "abteilungsMitarbeiterVisualizR.db";
+    private static final String DATABASE_NAME = "abteilungsMitarbeiterVisualizR.db";
 
     static final String TABLE_DEPARTMENTS = "departments";
     static final String DEPARTMENT_COL_ID = "id";
@@ -31,6 +29,7 @@ public class SQLiteHelper {
             + ")";
 
     public static void initializeDatabase() {
+        // TODO muss ich wirklich überprüfen ob die datenbank schon erstellt wurde? die tabellen werden ja mit dem Befehl "CREATE TABLE IF NOT EXISTS ..." angelegt
         if (databaseFileExists())
             return;
 
@@ -55,10 +54,9 @@ public class SQLiteHelper {
             stmt.execute(CREATE_DEPARTMENTS_TABLE);
             stmt.execute(CREATE_EMPLOYEE_TABLE);
 
-//            return true;
         } catch (SQLException e) {
 
-//            return false;
+            // TODO what to do on SQLException ?
         }
     }
 

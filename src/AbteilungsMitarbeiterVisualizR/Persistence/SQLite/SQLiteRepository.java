@@ -12,45 +12,7 @@ public class SQLiteRepository implements IPersistence {
     private Connection mConn;
 
     public SQLiteRepository() {
-        connect();
-    }
-
-    private void connect() {
         mConn = SQLiteHelper.getConnection();
-    }
-
-    private long getIdForDepartment(Department dep) {
-        String selectQuery = "SELECT "
-                + SQLiteHelper.DEPARTMENT_COL_ID
-                + " FROM " + SQLiteHelper.TABLE_DEPARTMENTS
-                + " WHERE " + SQLiteHelper.DEPARTMENT_COL_NAME + " = " + dep.getName();
-
-        try {
-            Statement stmt = mConn.createStatement();
-            ResultSet rs = stmt.executeQuery(selectQuery);
-
-            return rs.getLong(SQLiteHelper.EMPLOYEE_COL_ID);
-        } catch (SQLException e) {
-
-            return -1;
-        }
-    }
-
-    private long getIdForEmployee(Employee emp) {
-        String selectQuery = "SELECT "
-                + SQLiteHelper.EMPLOYEE_COL_ID
-                + " FROM " + SQLiteHelper.TABLE_EMPLOYEES
-                + " WHERE " + SQLiteHelper.EMPLOYEE_COL_NAME + " = " + emp.getName();
-
-        try {
-            Statement stmt = mConn.createStatement();
-            ResultSet rs = stmt.executeQuery(selectQuery);
-
-            return rs.getLong(SQLiteHelper.EMPLOYEE_COL_ID);
-        } catch (SQLException e) {
-
-            return -1;
-        }
     }
 
     @Override
@@ -61,23 +23,17 @@ public class SQLiteRepository implements IPersistence {
                 + " VALUES "
                 + " ('" + dep.getName() + "');";
 
-        executeQuery(query);
-
-        return new Department(
-                getIdForDepartment(dep),
-                dep.getName()
-        );
-    }
-
-    private boolean executeQuery(String query) {
         try {
             Statement stmt = mConn.createStatement();
-            ResultSet resSet = stmt.executeQuery(query);
+            stmt.executeQuery(query);
 
-            return resSet.getFetchSize() > 0;
+            return new Department(
+                    getIdForDepartment(dep),
+                    dep.getName()
+            );
         } catch (SQLException e) {
 
-            return false;
+            return null;
         }
     }
 
@@ -169,12 +125,18 @@ public class SQLiteRepository implements IPersistence {
                 + "( " + SQLiteHelper.EMPLOYEE_COL_NAME + ", " + SQLiteHelper.EMPLOYEE_COL_DEPARTMENT_ID + ")"
                 + " VALUES ('" + emp.getName() + "', " + departmentId + ");";
 
-        executeQuery(insertQuery);
+        try {
+            Statement stmt = mConn.createStatement();
+            stmt.executeQuery(insertQuery);
 
-        return new Employee(
-                getIdForEmployee(emp),
-                emp.getName()
-        );
+            return new Employee(
+                    getIdForEmployee(emp),
+                    emp.getName()
+            );
+        } catch (SQLException e) {
+
+            return null;
+        }
     }
 
     @Override
@@ -260,5 +222,39 @@ public class SQLiteRepository implements IPersistence {
             //todo do smth
         }
 
+    }
+
+    private long getIdForDepartment(Department dep) {
+        String selectQuery = "SELECT "
+                + SQLiteHelper.DEPARTMENT_COL_ID
+                + " FROM " + SQLiteHelper.TABLE_DEPARTMENTS
+                + " WHERE " + SQLiteHelper.DEPARTMENT_COL_NAME + " = " + dep.getName();
+
+        try {
+            Statement stmt = mConn.createStatement();
+            ResultSet rs = stmt.executeQuery(selectQuery);
+
+            return rs.getLong(SQLiteHelper.EMPLOYEE_COL_ID);
+        } catch (SQLException e) {
+
+            return -1;
+        }
+    }
+
+    private long getIdForEmployee(Employee emp) {
+        String selectQuery = "SELECT "
+                + SQLiteHelper.EMPLOYEE_COL_ID
+                + " FROM " + SQLiteHelper.TABLE_EMPLOYEES
+                + " WHERE " + SQLiteHelper.EMPLOYEE_COL_NAME + " = " + emp.getName();
+
+        try {
+            Statement stmt = mConn.createStatement();
+            ResultSet rs = stmt.executeQuery(selectQuery);
+
+            return rs.getLong(SQLiteHelper.EMPLOYEE_COL_ID);
+        } catch (SQLException e) {
+
+            return -1;
+        }
     }
 }
