@@ -1,11 +1,11 @@
 package AbteilungsMitarbeiterVisualizR.UI;
 
-import AbteilungsMitarbeiterVisualizR.Fachkonzept.Fachkonzept;
+import AbteilungsMitarbeiterVisualizR.Fachkonzept.IFachkonzept;
 import AbteilungsMitarbeiterVisualizR.Fachkonzept.Fachkonzept1;
 import AbteilungsMitarbeiterVisualizR.Persistence.IPersistence;
 
 public class GUI {
-    private Fachkonzept mFachkonzept;
+    private IFachkonzept mFachkonzept;
     // TODO implement me
     public GUI(IPersistence persistence) {
         mFachkonzept = new Fachkonzept1(persistence);

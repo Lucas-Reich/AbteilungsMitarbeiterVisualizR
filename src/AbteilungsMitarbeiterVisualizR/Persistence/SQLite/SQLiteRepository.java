@@ -8,53 +8,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SQLiteAccessor implements IPersistence {
+public class SQLiteRepository implements IPersistence {
     private Connection mConn;
 
-    public SQLiteAccessor() {
-        String url = "jdbc:sqlite:C://sqlite/db/test.db";
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(url);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-        mConn = conn;
-    }
-
-    private long getIdForDepartment(Department dep) {
-        String selectQuery = "SELECT "
-                + SQLiteHelper.DEPARTMENT_COL_ID
-                + " FROM " + SQLiteHelper.TABLE_DEPARTMENTS
-                + " WHERE " + SQLiteHelper.DEPARTMENT_COL_NAME + " = " + dep.getName();
-
-        try {
-            Statement stmt = mConn.createStatement();
-            ResultSet rs = stmt.executeQuery(selectQuery);
-
-            return rs.getLong(SQLiteHelper.EMPLOYEE_COL_ID);
-        } catch (SQLException e) {
-
-            return -1;
-        }
-    }
-
-    private long getIdForEmployee(Employee emp) {
-        String selectQuery = "SELECT "
-                + SQLiteHelper.EMPLOYEE_COL_ID
-                + " FROM " + SQLiteHelper.TABLE_EMPLOYEES
-                + " WHERE " + SQLiteHelper.EMPLOYEE_COL_NAME + " = " + emp.getName();
-
-        try {
-            Statement stmt = mConn.createStatement();
-            ResultSet rs = stmt.executeQuery(selectQuery);
-
-            return rs.getLong(SQLiteHelper.EMPLOYEE_COL_ID);
-        } catch (SQLException e) {
-
-            return -1;
-        }
+    public SQLiteRepository() {
+        mConn = SQLiteHelper.getConnection();
     }
 
     @Override
@@ -63,25 +21,19 @@ public class SQLiteAccessor implements IPersistence {
                 + SQLiteHelper.TABLE_DEPARTMENTS
                 + " (" + SQLiteHelper.DEPARTMENT_COL_NAME + ")"
                 + " VALUES "
-                + " (" + dep.getName() + " );";
+                + " ('" + dep.getName() + "');";
 
-        executeQuery(query);
-
-        return new Department(
-                getIdForDepartment(dep),
-                dep.getName()
-        );
-    }
-
-    private boolean executeQuery(String query) {
         try {
             Statement stmt = mConn.createStatement();
-            ResultSet resSet = stmt.executeQuery(query);
+            stmt.executeQuery(query);
 
-            return resSet.getFetchSize() > 0;
+            return new Department(
+                    getIdForDepartment(dep),
+                    dep.getName()
+            );
         } catch (SQLException e) {
 
-            return false;
+            return null;
         }
     }
 
@@ -137,7 +89,7 @@ public class SQLiteAccessor implements IPersistence {
     public void updateDepartment(Department dep) {
         String updateQuery = "UPDATE "
                 + SQLiteHelper.TABLE_DEPARTMENTS
-                + " SET " + SQLiteHelper.DEPARTMENT_COL_NAME + " = " + dep.getName()
+                + " SET " + SQLiteHelper.DEPARTMENT_COL_NAME + " = '" + dep.getName() + "'"
                 + " WHERE " + SQLiteHelper.DEPARTMENT_COL_ID + " = " + dep.getId()
                 + ";";
 
@@ -171,14 +123,20 @@ public class SQLiteAccessor implements IPersistence {
         String insertQuery = "INSERT INTO "
                 + SQLiteHelper.TABLE_EMPLOYEES
                 + "( " + SQLiteHelper.EMPLOYEE_COL_NAME + ", " + SQLiteHelper.EMPLOYEE_COL_DEPARTMENT_ID + ")"
-                + " VALUES (" + emp.getName() + " , " + departmentId + " );";
+                + " VALUES ('" + emp.getName() + "', " + departmentId + ");";
 
-        executeQuery(insertQuery);
+        try {
+            Statement stmt = mConn.createStatement();
+            stmt.executeQuery(insertQuery);
 
-        return new Employee(
-                getIdForEmployee(emp),
-                emp.getName()
-        );
+            return new Employee(
+                    getIdForEmployee(emp),
+                    emp.getName()
+            );
+        } catch (SQLException e) {
+
+            return null;
+        }
     }
 
     @Override
@@ -234,7 +192,7 @@ public class SQLiteAccessor implements IPersistence {
     public void updateEmployee(Employee emp) {
         String updateQuery = "UPDATE "
                 + SQLiteHelper.TABLE_EMPLOYEES
-                + " SET " + SQLiteHelper.EMPLOYEE_COL_NAME + " = " + emp.getName()
+                + " SET " + SQLiteHelper.EMPLOYEE_COL_NAME + " = '" + emp.getName() + "'"
                 + " WHERE " + SQLiteHelper.EMPLOYEE_COL_ID + " = " + emp.getId()
                 + ";";
 
@@ -264,5 +222,39 @@ public class SQLiteAccessor implements IPersistence {
             //todo do smth
         }
 
+    }
+
+    private long getIdForDepartment(Department dep) {
+        String selectQuery = "SELECT "
+                + SQLiteHelper.DEPARTMENT_COL_ID
+                + " FROM " + SQLiteHelper.TABLE_DEPARTMENTS
+                + " WHERE " + SQLiteHelper.DEPARTMENT_COL_NAME + " = " + dep.getName();
+
+        try {
+            Statement stmt = mConn.createStatement();
+            ResultSet rs = stmt.executeQuery(selectQuery);
+
+            return rs.getLong(SQLiteHelper.EMPLOYEE_COL_ID);
+        } catch (SQLException e) {
+
+            return -1;
+        }
+    }
+
+    private long getIdForEmployee(Employee emp) {
+        String selectQuery = "SELECT "
+                + SQLiteHelper.EMPLOYEE_COL_ID
+                + " FROM " + SQLiteHelper.TABLE_EMPLOYEES
+                + " WHERE " + SQLiteHelper.EMPLOYEE_COL_NAME + " = " + emp.getName();
+
+        try {
+            Statement stmt = mConn.createStatement();
+            ResultSet rs = stmt.executeQuery(selectQuery);
+
+            return rs.getLong(SQLiteHelper.EMPLOYEE_COL_ID);
+        } catch (SQLException e) {
+
+            return -1;
+        }
     }
 }

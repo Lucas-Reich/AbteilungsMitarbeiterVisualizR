@@ -28,4 +28,15 @@ public class Employee {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Employee))
+            return false;
+
+        Employee other = (Employee) obj;
+
+        return this.getId() == other.getId()
+                && this.getName().equals(other.getName());
+    }
 }

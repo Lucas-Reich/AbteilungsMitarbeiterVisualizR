@@ -4,15 +4,15 @@ import java.io.File;
 import java.sql.*;
 
 public class SQLiteHelper {
-    static final String DATABASE_NAME = "abteilungsMitarbeiterVisualizR.db";
+    private static final String DATABASE_NAME = "abteilungsMitarbeiterVisualizR.db";
 
     static final String TABLE_DEPARTMENTS = "departments";
     static final String DEPARTMENT_COL_ID = "id";
     static final String DEPARTMENT_COL_NAME = "name";
     private static final String CREATE_DEPARTMENTS_TABLE = ""
-            + "CREATE TABLE IF NOT EXISTS ("
-            + TABLE_DEPARTMENTS + " "
-            + DEPARTMENT_COL_ID + " INTEGER PRIMARY KEY"
+            + "CREATE TABLE IF NOT EXISTS "
+            + TABLE_DEPARTMENTS + "( "
+            + DEPARTMENT_COL_ID + " INTEGER PRIMARY KEY, "
             + DEPARTMENT_COL_NAME + " TEXT NOT NULL"
             + ")";
 
@@ -21,39 +21,42 @@ public class SQLiteHelper {
     static final String EMPLOYEE_COL_NAME = "name";
     static final String EMPLOYEE_COL_DEPARTMENT_ID = "department_id";
     private static final String CREATE_EMPLOYEE_TABLE = ""
-            + "CREATE TABLE IF NOT EXISTS ("
-            + TABLE_EMPLOYEES + " "
+            + "CREATE TABLE IF NOT EXISTS "
+            + TABLE_EMPLOYEES + "( "
             + EMPLOYEE_COL_ID + " INTEGER PRIMARY KEY, "
             + EMPLOYEE_COL_NAME + " TEXT NOT NULL, "
             + EMPLOYEE_COL_DEPARTMENT_ID + " INTEGER NOT NULL"
             + ")";
 
     public static void initializeDatabase() {
+        // TODO muss ich wirklich überprüfen ob die datenbank schon erstellt wurde? die tabellen werden ja mit dem Befehl "CREATE TABLE IF NOT EXISTS ..." angelegt
         if (databaseFileExists())
             return;
 
+        Connection con = getConnection();
+
+        if (null != con)
+            createTables(con);
+    }
+
+    static Connection getConnection() {
         String url = String.format("jdbc:sqlite:%s/%s", getDatabaseDir(), DATABASE_NAME);
-
-        try (Connection con = DriverManager.getConnection(url)) {
-            if (null != con)
-                createTables(con);
-
+        try {
+            return DriverManager.getConnection(url);
         } catch (SQLException e) {
-
-            System.out.println(e.getMessage());
+            return null;
         }
     }
 
-    private static boolean createTables(Connection connection) {
+    private static void createTables(Connection connection) {
         try {
             Statement stmt = connection.createStatement();
             stmt.execute(CREATE_DEPARTMENTS_TABLE);
             stmt.execute(CREATE_EMPLOYEE_TABLE);
 
-            return true;
         } catch (SQLException e) {
 
-            return false;
+            // TODO what to do on SQLException ?
         }
     }
 
