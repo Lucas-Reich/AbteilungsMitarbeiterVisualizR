@@ -12,6 +12,7 @@ public class SQLiteRepository implements IPersistence {
     private Connection mConn;
 
     public SQLiteRepository() {
+        // TODO should I inject the Connection? for better testability
         mConn = SQLiteHelper.getConnection();
     }
 
