@@ -40,7 +40,6 @@ public class Fachkonzept1 implements IFachkonzept {
             }
         });
 
-
         return departments;
     }
 
@@ -94,7 +93,6 @@ public class Fachkonzept1 implements IFachkonzept {
 
     @Override
     public void deleteEmployee(long employeeId) {
-
         mPersistence.deleteEmployee(employeeId);
     }
 
