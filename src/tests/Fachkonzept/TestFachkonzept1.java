@@ -5,16 +5,12 @@ import AbteilungsMitarbeiterVisualizR.Entities.Employee;
 import AbteilungsMitarbeiterVisualizR.Fachkonzept.Fachkonzept1;
 import AbteilungsMitarbeiterVisualizR.Fachkonzept.IFachkonzept;
 import AbteilungsMitarbeiterVisualizR.Persistence.IPersistence;
-import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 public class TestFachkonzept1 extends AbstractFachkonzeptTest {
+
     @Override
     protected IFachkonzept createFachkonzept(IPersistence persistence) {
         return new Fachkonzept1(
