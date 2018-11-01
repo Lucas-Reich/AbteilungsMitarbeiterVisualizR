@@ -22,6 +22,7 @@ public class TestFachkonzept1 extends AbstractFachkonzeptTest {
         );
     }
 
+    @Override
     protected List<Department> getDepartmentsSortedById() {
         return new ArrayList<Department>() {{
             add(new Department(1, "IT"));
@@ -30,6 +31,7 @@ public class TestFachkonzept1 extends AbstractFachkonzeptTest {
         }};
     }
 
+    @Override
     protected List<Department> getDepartmentsSortedByName() {
         return new ArrayList<Department>() {{
             add(new Department(3, "Business"));
@@ -47,6 +49,7 @@ public class TestFachkonzept1 extends AbstractFachkonzeptTest {
         }};
     }
 
+    @Override
     protected List<Employee> getEmployeesSortedByName() {
         return new ArrayList<Employee>() {{
             add(new Employee(234, "Christian Schulz"));
