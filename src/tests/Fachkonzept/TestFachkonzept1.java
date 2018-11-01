@@ -21,18 +21,24 @@ public class TestFachkonzept1 extends AbstractFachkonzeptTest {
     @Override
     protected List<Department> getDepartmentsSortedById() {
         return new ArrayList<Department>() {{
-            add(new Department(1, "IT"));
-            add(new Department(2, "Marketing"));
-            add(new Department(3, "Business"));
+            add(new Department(1, "Abteilung D"));
+            add(new Department(2, "Abteilung A"));
+            add(new Department(3, "Abteilung E"));
+            add(new Department(4, "Abteilung B"));
+            add(new Department(5, "Abteilung C"));
+            add(new Department(6, "Abteilung C"));
         }};
     }
 
     @Override
     protected List<Department> getDepartmentsSortedByName() {
         return new ArrayList<Department>() {{
-            add(new Department(3, "Business"));
-            add(new Department(1, "IT"));
-            add(new Department(2, "Marketing"));
+            add(new Department(2, "Abteilung A"));
+            add(new Department(4, "Abteilung B"));
+            add(new Department(5, "Abteilung C"));
+            add(new Department(6, "Abteilung C"));
+            add(new Department(1, "Abteilung D"));
+            add(new Department(3, "Abteilung E"));
         }};
     }
 

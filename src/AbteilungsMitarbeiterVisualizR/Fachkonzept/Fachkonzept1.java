@@ -36,7 +36,7 @@ public class Fachkonzept1 implements IFachkonzept {
         departments.sort(new Comparator<Department>() {
             @Override
             public int compare(Department o1, Department o2) {
-                return Character.compare(o1.getName().charAt(0), o2.getName().charAt(0));
+                return o1.getName().compareTo(o2.getName());
             }
         });
 
