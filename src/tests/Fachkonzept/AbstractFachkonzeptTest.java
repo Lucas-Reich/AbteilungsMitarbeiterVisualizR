@@ -7,7 +7,6 @@ import AbteilungsMitarbeiterVisualizR.Persistence.IPersistence;
 import org.junit.After;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -15,7 +14,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 public abstract class AbstractFachkonzeptTest {
-    protected IFachkonzept fachkonzept;
+    private IFachkonzept fachkonzept;
 
     @After
     public void tearDown() {
@@ -53,23 +52,23 @@ public abstract class AbstractFachkonzeptTest {
         );
     }
 
+    protected abstract List<Department> getDepartmentsSortedById();
+
+    protected abstract List<Department> getDepartmentsSortedByName();
+
     @Test
     public void testGetDepartments() {
-        List<Department> expectedDepartments = new ArrayList<>();
-        expectedDepartments.add(new Department(1, "IT"));
-        expectedDepartments.add(new Department(2, "Marketing"));
-        expectedDepartments.add(new Department(3, "Business"));
-
         IPersistence persistence = mock(IPersistence.class);
-        when(persistence.getAllDepartments()).thenReturn(expectedDepartments);
+        when(persistence.getAllDepartments()).thenReturn(getDepartmentsSortedById());
 
         fachkonzept = createFachkonzept(persistence);
 
-        assertEquals(
-                "Wrong departments returned",
-                expectedDepartments,
-                fachkonzept.getDepartments()
-        );
+        List<Department> expectedDepartments = getDepartmentsSortedByName();
+        List<Department> actualDepartments = fachkonzept.getDepartments();
+
+        for (int i = 0; i < actualDepartments.size(); i++) {
+            assertEquals(expectedDepartments.get(i), actualDepartments.get(i));
+        }
     }
 
     @Test
@@ -134,23 +133,23 @@ public abstract class AbstractFachkonzeptTest {
         );
     }
 
+    protected abstract List<Employee> getEmployeesSortedById();
+
+    protected abstract List<Employee> getEmployeesSortedByName();
+
     @Test
     public void testGetEmployees() {
-        List<Employee> expectedEmployees = new ArrayList<>();
-        expectedEmployees.add(new Employee(23, "Lucas Reich"));
-        expectedEmployees.add(new Employee(34578, "Viktor Yezhov"));
-        expectedEmployees.add(new Employee(234, "Christian Schulz"));
-
         IPersistence persistence = mock(IPersistence.class);
-        when(persistence.getAllEmployees()).thenReturn(expectedEmployees);
+        when(persistence.getAllEmployees()).thenReturn(getEmployeesSortedById());
 
         fachkonzept = createFachkonzept(persistence);
 
-        assertEquals(
-                "Wrong employees returned",
-                expectedEmployees,
-                fachkonzept.getEmployees(1) // TODO which departmentId
-        );
+        List<Employee> expectedEmployees = getEmployeesSortedByName();
+        List<Employee> actualEmployees = fachkonzept.getEmployees(1);
+
+        for (int i = 0; i < actualEmployees.size(); i++) {
+            assertEquals(expectedEmployees.get(i), actualEmployees.get(i));
+        }
     }
 
     @Test
