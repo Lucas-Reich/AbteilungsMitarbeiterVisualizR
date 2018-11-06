@@ -26,7 +26,7 @@ public class SQLiteRepository implements IPersistence {
 
         try {
             Statement stmt = mConn.createStatement();
-            stmt.executeQuery(query);
+            stmt.executeUpdate(query);
 
             return new Department(
                     getIdForDepartment(dep),
@@ -34,6 +34,7 @@ public class SQLiteRepository implements IPersistence {
             );
         } catch (SQLException e) {
 
+            System.out.println(e.getMessage());
             return null;
         }
     }
@@ -43,6 +44,7 @@ public class SQLiteRepository implements IPersistence {
         String query = "SELECT "
                 + SQLiteHelper.DEPARTMENT_COL_ID + ", "
                 + SQLiteHelper.DEPARTMENT_COL_NAME
+                + " FROM " + SQLiteHelper.TABLE_DEPARTMENTS
                 + " WHERE " + SQLiteHelper.DEPARTMENT_COL_ID + " = " + id + ";";
 
         try {
@@ -65,7 +67,8 @@ public class SQLiteRepository implements IPersistence {
 
         String query = "SELECT "
                 + SQLiteHelper.DEPARTMENT_COL_ID + ", "
-                + SQLiteHelper.DEPARTMENT_COL_NAME;
+                + SQLiteHelper.DEPARTMENT_COL_NAME
+                + " FROM " + SQLiteHelper.TABLE_DEPARTMENTS + ";";
 
         try {
             Statement stmt = mConn.createStatement();
@@ -229,7 +232,7 @@ public class SQLiteRepository implements IPersistence {
         String selectQuery = "SELECT "
                 + SQLiteHelper.DEPARTMENT_COL_ID
                 + " FROM " + SQLiteHelper.TABLE_DEPARTMENTS
-                + " WHERE " + SQLiteHelper.DEPARTMENT_COL_NAME + " = " + dep.getName();
+                + " WHERE " + SQLiteHelper.DEPARTMENT_COL_NAME + " = '" + dep.getName() + "'";
 
         try {
             Statement stmt = mConn.createStatement();

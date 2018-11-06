@@ -19,15 +19,7 @@ public class Main {
 
         SQLiteHelper.initializeDatabase();
         SQLiteRepository sqlite = new SQLiteRepository();
-        Employee employee1 = new Employee("Viktor Yezhov");
-        Employee employee2 = new Employee("Christian Schulz");
-        Employee employee3 = new Employee("Lucas Reich");
-        Department department = sqlite.saveDepartment(new Department("Abteilung 1"));
-        sqlite.saveEmployee(employee1, department.getId());
-        sqlite.saveEmployee(employee2, department.getId());
-        sqlite.saveEmployee(employee3, department.getId());
-        sqlite.saveDepartment(new Department("Abteilung 2"));
-        sqlite.saveDepartment(new Department("Abteilung 3"));
-        sqlite.saveDepartment(new Department("Abteilung 4"));
+
+        System.out.println(sqlite.getDepartment(3).getName());
     }
 }
