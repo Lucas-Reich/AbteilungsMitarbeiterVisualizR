@@ -1,5 +1,7 @@
 package AbteilungsMitarbeiterVisualizR.Entities;
 
+import org.w3c.dom.events.Event;
+
 import java.util.ArrayList;
 import java.util.List;
 
