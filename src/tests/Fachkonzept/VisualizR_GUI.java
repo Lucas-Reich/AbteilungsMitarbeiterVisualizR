@@ -3,6 +3,8 @@ package tests.Fachkonzept;
 import AbteilungsMitarbeiterVisualizR.Entities.Department;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -17,10 +19,10 @@ public class VisualizR_GUI {
     private JButton mitarbeiterNeuButton;
     private JButton mitarbeiterBearbeitenButton;
     private JButton mitarbeiterLoeschenButton;
+    private JButton speichernButton;
     private JTextArea bearbeitungTextArea;
     private JComboBox abteilungSelect;
-    private JPanel listPanel;
-    JFrame frame;
+    JFrame frame = new JFrame("visualizR");
 
     public VisualizR_GUI() {
 
@@ -61,10 +63,6 @@ public class VisualizR_GUI {
             }
         });
 
-        frame = new JFrame("App");
-
-
-
     }
 
     public void setData(List<Department> departments) {
@@ -73,15 +71,18 @@ public class VisualizR_GUI {
         //Object[] test = new Object[2];
         //test[0] = test1;
         //test[1] = test2;
-        //abteilungsliste = new JList(test); //data has type Object[]
-        //abteilungsliste.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        //abteilungsliste.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-        //abteilungsliste.setVisibleRowCount(0);
-        //JScrollPane testpane = new JScrollPane(abteilungsliste);
-        //testpane.setPreferredSize(new Dimension(250, 50));
-        JList deparments = new JList(departments.toArray());
-        JPanel panel = new JPanel();
-        listPanel.add(deparments);
+        JFrame frame = new JFrame("Abteilungsliste");
+        abteilungsliste = new JList(departments.toArray()); //data has type Object[]
+        //abteilungsliste.setVisibleRowCount();
+        //abteilungsliste.getSelectedIndex();
+        abteilungsliste.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        abteilungsliste.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+
+        JScrollPane abteilungScrollPane = new JScrollPane(abteilungsliste);
+        frame.add(abteilungScrollPane);
+
+        frame.setSize(250, 200);
+        frame.setVisible(true);
     }
 
     public void guiShow() {

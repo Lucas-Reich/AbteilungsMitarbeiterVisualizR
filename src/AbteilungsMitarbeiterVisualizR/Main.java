@@ -13,8 +13,12 @@ public class Main {
         SQLiteHelper.initializeDatabase();
         SQLiteRepository sqlite = new SQLiteRepository();
 
-        Department department = new Department("Abteilung 1337");
-        //sqlite.saveDepartment(department);
+        ///Department department2 = new Department("Abteilung 1337");
+        //Department department3 = new Department("Abteilung 13");
+        //Department department4 = new Department("Abteilung 25");
+        //sqlite.saveDepartment(department2);
+        //sqlite.saveDepartment(department3);
+        //sqlite.saveDepartment(department4);
 
         //System.out.println(sqlite.getDepartment(3).getName());
 
