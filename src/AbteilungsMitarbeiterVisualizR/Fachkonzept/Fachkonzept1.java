@@ -33,12 +33,12 @@ public class Fachkonzept1 implements IFachkonzept {
     public List<Department> getDepartments() {
         List<Department> departments = mPersistence.getAllDepartments();
 
-        departments.sort(new Comparator<Department>() {
-            @Override
-            public int compare(Department o1, Department o2) {
-                return o1.getName().compareTo(o2.getName());
-            }
-        });
+        //departments.sort(new Comparator<Department>() {
+        //    @Override
+        //    public int compare(Department o1, Department o2) {
+        //       return o1.getName().compareTo(o2.getName());
+        //   }
+        //});
 
         return departments;
     }

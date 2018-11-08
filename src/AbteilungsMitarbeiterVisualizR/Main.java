@@ -9,14 +9,17 @@ public class Main {
     public static void main(String args[]) {
         System.out.println("Hello World!");
 
-        // Example, does not have to look like this
-        GUI gui = new GUI(new XMLHelper());
-        gui.show();
-
 
         SQLiteHelper.initializeDatabase();
         SQLiteRepository sqlite = new SQLiteRepository();
 
-        System.out.println(sqlite.getDepartment(3).getName());
+        Department department = new Department("Abteilung 1337");
+        //sqlite.saveDepartment(department);
+
+        //System.out.println(sqlite.getDepartment(3).getName());
+
+        // Example, does not have to look like this
+        GUI gui = new GUI(new SQLiteRepository());
+        gui.show();
     }
 }

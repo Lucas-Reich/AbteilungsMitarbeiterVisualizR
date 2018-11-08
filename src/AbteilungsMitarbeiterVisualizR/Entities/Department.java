@@ -16,6 +16,11 @@ public class Department {
         employees = new ArrayList<>();
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
+
     public Department(String name) {
         this(-1, name);
     }

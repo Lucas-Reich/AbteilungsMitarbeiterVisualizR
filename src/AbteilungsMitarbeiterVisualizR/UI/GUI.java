@@ -3,6 +3,7 @@ package AbteilungsMitarbeiterVisualizR.UI;
 import AbteilungsMitarbeiterVisualizR.Fachkonzept.IFachkonzept;
 import AbteilungsMitarbeiterVisualizR.Fachkonzept.Fachkonzept1;
 import AbteilungsMitarbeiterVisualizR.Persistence.IPersistence;
+import tests.Fachkonzept.VisualizR_GUI;
 
 public class GUI {
     private IFachkonzept mFachkonzept;
@@ -12,6 +13,8 @@ public class GUI {
     }
 
     public void show() {
-        // TODO zeige die Programm UI an
+        VisualizR_GUI gui = new VisualizR_GUI();
+        gui.setData(mFachkonzept.getDepartments());
+        gui.guiShow();
     }
 }
