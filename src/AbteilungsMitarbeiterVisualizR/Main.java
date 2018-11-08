@@ -1,11 +1,8 @@
 package AbteilungsMitarbeiterVisualizR;
 
-import AbteilungsMitarbeiterVisualizR.Entities.Department;
-import AbteilungsMitarbeiterVisualizR.Entities.Employee;
 import AbteilungsMitarbeiterVisualizR.Persistence.SQLite.SQLiteHelper;
 import AbteilungsMitarbeiterVisualizR.Persistence.SQLite.SQLiteRepository;
 import AbteilungsMitarbeiterVisualizR.UI.GUI;
-import AbteilungsMitarbeiterVisualizR.Persistence.XML.XMLHelper;
 
 public class Main {
     // TODO refine me
