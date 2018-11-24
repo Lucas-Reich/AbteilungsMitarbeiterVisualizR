@@ -80,12 +80,14 @@ public class VisualizR_GUI {
         abteilungsliste.setListData(departments.toArray());
         abteilungsliste.setModel(abteilungslisteModel);
 
+        abteilungslisteModel.add(0, "FooBar");
+
         System.out.println(abteilungslisteModel);
-        System.out.println(abteilungsliste.getModel());
+        //System.out.println(abteilungsliste.getModel());
 
     }
 
-    public void guiShow() {
+    public void createFrame() {
         frame.setContentPane(new VisualizR_GUI().abteilungsmitarbeitervisualizr);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();

@@ -3,6 +3,7 @@ package AbteilungsMitarbeiterVisualizR.UI;
 import AbteilungsMitarbeiterVisualizR.Fachkonzept.IFachkonzept;
 import AbteilungsMitarbeiterVisualizR.Fachkonzept.Fachkonzept1;
 import AbteilungsMitarbeiterVisualizR.Persistence.IPersistence;
+import tests.Fachkonzept.FoobarGUI;
 import tests.Fachkonzept.VisualizR_GUI;
 
 public class GUI {
@@ -13,8 +14,12 @@ public class GUI {
     }
 
     public void show() {
-        VisualizR_GUI gui = new VisualizR_GUI();
-        gui.setData(mFachkonzept.getDepartments());
-        gui.guiShow();
+        FoobarGUI foo = new FoobarGUI();
+        foo.setListData();
+        foo.createAndShowGUI();
+
+        //VisualizR_GUI gui = new VisualizR_GUI();
+        //gui.setData(mFachkonzept.getDepartments());
+        //gui.createFrame();
     }
 }

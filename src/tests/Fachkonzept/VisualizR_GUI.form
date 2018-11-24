@@ -110,6 +110,7 @@
         </constraints>
         <properties>
           <autoscrolls value="true"/>
+          <model/>
         </properties>
         <clientProperties>
           <List.isFileList class="java.lang.Boolean" value="false"/>
