@@ -1,8 +1,11 @@
 package tests.Fachkonzept;
 
+import AbteilungsMitarbeiterVisualizR.Entities.Department;
+
 import javax.swing.*;
 import javax.swing.event.ListDataListener;
 import java.awt.*;
+import java.util.List;
 import java.util.concurrent.Flow;
 
 public class FoobarGUI {
@@ -26,22 +29,22 @@ public class FoobarGUI {
         //Display the window.
         frame.pack();
         frame.setVisible(true);
-
     }
 
-    public void setListData() {
+    public void setDepartmentsData(List<Department> departments) {
         listModel = new DefaultListModel();
-        listModel.addElement("foo");
-        listModel.addElement("bar");
-        listModel.addElement("baz");
+        listModel.addElement(departments);
+
+        System.out.println(listModel.size());
+
         list = new JList(listModel);
-        customListData();
+
+        mitarbeiterData();
     }
 
-    public void customListData() {
+    public void mitarbeiterData() {
         listModel2 = new DefaultListModel();
         listModel2.addElement("ben");
         list1 = new JList(listModel2);
     }
-
 }
