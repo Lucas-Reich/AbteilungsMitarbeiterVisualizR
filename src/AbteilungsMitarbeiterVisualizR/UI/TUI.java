@@ -3,6 +3,7 @@ package AbteilungsMitarbeiterVisualizR.UI;
 import AbteilungsMitarbeiterVisualizR.Fachkonzept.IFachkonzept;
 import AbteilungsMitarbeiterVisualizR.Fachkonzept.Fachkonzept1;
 import AbteilungsMitarbeiterVisualizR.Persistence.IPersistence;
+import tests.Fachkonzept.Example;
 import tests.Fachkonzept.VisualizR_TUI;
 
 public class TUI {
@@ -16,5 +17,7 @@ public class TUI {
     public void show() {
         VisualizR_TUI tui = new VisualizR_TUI();
         tui.tuiShow();
+        Example example = new Example();
+        example.Example();
     }
 }
