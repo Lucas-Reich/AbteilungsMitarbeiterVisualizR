@@ -14,7 +14,7 @@ public class GUI {
 
     public void show() {
         VisualizR_GUI gui = new VisualizR_GUI();
-        gui.setDataNew(mFachkonzept.getDepartments());
+        gui.setData(mFachkonzept.getDepartments());
         gui.guiShow();
     }
 }

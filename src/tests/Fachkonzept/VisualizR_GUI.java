@@ -3,15 +3,24 @@ package tests.Fachkonzept;
 import AbteilungsMitarbeiterVisualizR.Entities.Department;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+
+import javax.swing.JFrame;
+import javax.swing.JList;
+
 public class VisualizR_GUI {
+
+    JFrame frame = new JFrame("visualizR");
+
     private JButton abteilungNeuButton;
     private JButton abteilungBearbeitenButton;
     private JButton abteilungLoeschenButton;
     private JPanel abteilungsmitarbeitervisualizr;
+    private DefaultListModel abteilungslisteModel;
     private JList abteilungsliste;
     private JList mitarbeiterliste;
     private JButton mitarbeiterNeuButton;
@@ -20,14 +29,6 @@ public class VisualizR_GUI {
     private JButton speichernButton;
     private JTextArea bearbeitungTextArea;
     private JComboBox abteilungSelect;
-
-    String returnedList;
-
-    JFrame frame = new JFrame("visualizR");
-
-    JList listenstuff;
-
-
 
     public VisualizR_GUI() {
 
@@ -68,56 +69,26 @@ public class VisualizR_GUI {
             }
         });
     }
-    /*
+
     public void setData(List<Department> departments) {
-        //String test1 = "test1";
-        //String test2 = "test2";
-        //Object[] test = new Object[2];
-        //test[0] = test1;
-        //test[1] = test2;
-        //JFrame frame = new JFrame("Abteilungsliste");
-        abteilungsliste = new JList(departments.toArray()); //data has type Object[]
-        //abteilungsliste.setVisibleRowCount();
-        //abteilungsliste.getSelectedIndex();
-        abteilungsliste.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        abteilungsliste.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-
-        //JScrollPane abteilungScrollPane = new JScrollPane(abteilungsliste);
-        //frame.add(abteilungScrollPane);
-
-        //frame.setSize(250, 200);
-        //frame.setVisible(true);
-
-    }
-    */
-
-
-    public StringBuilder setDataNew(List<Department> departments) {
+        abteilungslisteModel = new DefaultListModel();
+        abteilungslisteModel.addElement(departments);
 
         abteilungsliste.setLayoutOrientation(JList.HORIZONTAL_WRAP);
         abteilungsliste.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         abteilungsliste.setVisibleRowCount(5);
         abteilungsliste.setListData(departments.toArray());
+        abteilungsliste.setModel(abteilungslisteModel);
 
-        int size = abteilungsliste.getModel().getSize();
-        StringBuilder allDepartments = new StringBuilder();
-        for(int i = 0; i < size; i++) {
-            allDepartments.append("\n").append(abteilungsliste.getModel().getElementAt(i));
-        }
-
-        System.out.println(allDepartments);
-
-        return allDepartments;
+        System.out.println(abteilungslisteModel);
+        System.out.println(abteilungsliste.getModel());
 
     }
-
-
 
     public void guiShow() {
         frame.setContentPane(new VisualizR_GUI().abteilungsmitarbeitervisualizr);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
-
     }
 }

@@ -3,6 +3,7 @@ package AbteilungsMitarbeiterVisualizR.UI;
 import AbteilungsMitarbeiterVisualizR.Fachkonzept.IFachkonzept;
 import AbteilungsMitarbeiterVisualizR.Fachkonzept.Fachkonzept1;
 import AbteilungsMitarbeiterVisualizR.Persistence.IPersistence;
+import tests.Fachkonzept.VisualizR_TUI;
 
 public class TUI {
     private IFachkonzept mFachkonzept;
@@ -13,6 +14,7 @@ public class TUI {
     }
 
     public void show() {
-        // TODO zeige die Terminal UI an
+        VisualizR_TUI tui = new VisualizR_TUI();
+        tui.tuiShow();
     }
 }
