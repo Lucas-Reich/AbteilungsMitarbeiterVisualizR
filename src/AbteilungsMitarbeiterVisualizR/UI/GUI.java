@@ -16,7 +16,8 @@ public class GUI {
     public void show() {
         FoobarGUI foo = new FoobarGUI();
         foo.setDepartmentsData(mFachkonzept.getDepartments());
-        //foo.setEmployeesData(mFachkonzept.getEmployees());
+        foo.setEmployeesData();
+        foo.setListener();
         foo.createAndShowGUI();
 
         //VisualizR_GUI gui = new VisualizR_GUI();
