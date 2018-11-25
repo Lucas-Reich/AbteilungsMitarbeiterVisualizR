@@ -72,6 +72,7 @@ public class FoobarGUI {
                 abteilungsListModel.remove(abteilungsliste.getSelectedIndex());
             }
         });
+
         /*
         mitarbeiterDeleteButton.addActionListener(new ActionListener() {
             @Override
@@ -80,6 +81,7 @@ public class FoobarGUI {
             }
         });
         */
+
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
