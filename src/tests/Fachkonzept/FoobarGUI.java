@@ -7,6 +7,8 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 public class FoobarGUI {
@@ -18,24 +20,9 @@ public class FoobarGUI {
 
     private JPanel FoobarPanel;
     private JButton addButton;
-    private JButton deleteButton;
+    private JButton abteilungDeleteButton;
     private JTextField textField1;
 
-    public void createAndShowGUI() {
-        //Create and set up the window.
-        JFrame frame = new JFrame("Foo");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new GridLayout());
-        frame.setPreferredSize(new Dimension(640, 480));
-        frame.getContentPane().add(abteilungsliste);
-        frame.getContentPane().add(mitarbeiterliste);
-        frame.getContentPane().add(addButton);
-        frame.getContentPane().add(deleteButton);
-        frame.getContentPane().add(textField1);
-        //Display the window.
-        frame.pack();
-        frame.setVisible(true);
-    }
 
     //Abteilungsliste erstellen und füllen
     public void setDepartmentsData(List<Department> departments) {
@@ -67,21 +54,53 @@ public class FoobarGUI {
 
     //Listener setzen
     public void setListener() {
-        ListSelectionListener abteilungslisteListener = new ListSelectionListener() {
+        abteilungsliste.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 textField1.setText(String.valueOf(abteilungsliste.getSelectedValue()));
             }
-        };
-
-        ListSelectionListener mitarbeiterlisteListener = new ListSelectionListener() {
+        });
+        mitarbeiterliste.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 textField1.setText(String.valueOf(mitarbeiterliste.getSelectedValue()));
             }
-        };
+        });
+        abteilungDeleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                abteilungsListModel.remove(abteilungsliste.getSelectedIndex());
+            }
+        });
+        /*
+        mitarbeiterDeleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mitarbeiterListModel.remove(mitarbeiterliste.getSelectedIndex());
+            }
+        });
+        */
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                abteilungsListModel.addElement(String.valueOf(textField1.getText()));
+            }
+        });
+    }
 
-        abteilungsliste.addListSelectionListener(abteilungslisteListener);
-        mitarbeiterliste.addListSelectionListener(mitarbeiterlisteListener);
+    public void createAndShowGUI() {
+        //Create and set up the window.
+        JFrame frame = new JFrame("Foo");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new GridLayout());
+        frame.setPreferredSize(new Dimension(640, 480));
+        frame.getContentPane().add(abteilungsliste);
+        frame.getContentPane().add(mitarbeiterliste);
+        frame.getContentPane().add(addButton);
+        frame.getContentPane().add(abteilungDeleteButton);
+        frame.getContentPane().add(textField1);
+        //Display the window.
+        frame.pack();
+        frame.setVisible(true);
     }
 }
