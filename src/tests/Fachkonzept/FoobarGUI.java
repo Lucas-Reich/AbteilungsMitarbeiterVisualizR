@@ -7,9 +7,12 @@ import AbteilungsMitarbeiterVisualizR.Fachkonzept.Fachkonzept1;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.text.html.parser.Entity;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public class FoobarGUI {
@@ -44,7 +47,6 @@ public class FoobarGUI {
         abteilungsliste.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 
         abteilungsliste = new JList(abteilungsListModel);
-
     }
 
     //Mitarbeiterliste erstellen und füllen
@@ -57,8 +59,6 @@ public class FoobarGUI {
         mitarbeiterliste.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 
         mitarbeiterliste = new JList(mitarbeiterListModel);
-
-        System.out.print(employees);
     }
 
     //Listener setzen
