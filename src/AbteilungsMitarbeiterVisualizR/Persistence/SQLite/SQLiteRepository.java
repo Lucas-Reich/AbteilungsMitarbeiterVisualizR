@@ -9,82 +9,55 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SQLiteRepository implements IPersistence {
-    private Connection mConn;
+    private SQLiteDatabaseHandler mDatabase;
 
-    public SQLiteRepository() {
-        // TODO should I inject the Connection? for better testability
-        mConn = SQLiteHelper.getConnection();
+    public SQLiteRepository(SQLiteDatabaseHandler connectionHandler) {
+        mDatabase = connectionHandler;
     }
 
     @Override
     public Department saveDepartment(Department dep) {
-        String query = "INSERT INTO "
+        String insertQuery = "INSERT INTO "
                 + SQLiteHelper.TABLE_DEPARTMENTS
                 + " (" + SQLiteHelper.DEPARTMENT_COL_NAME + ")"
                 + " VALUES "
                 + " ('" + dep.getName() + "');";
 
-        try {
-            Statement stmt = mConn.createStatement();
-            stmt.executeUpdate(query);
+        mDatabase.connect();
+        int departmentId = mDatabase.executeUpdate(insertQuery);
+        mDatabase.disconnect();
 
-            return new Department(
-                    getIdForDepartment(dep),
-                    dep.getName()
-            );
-        } catch (SQLException e) {
-
-            System.out.println(e.getMessage());
-            return null;
-        }
+        return new Department(departmentId, dep.getName());
     }
 
     @Override
     public Department getDepartment(long id) {
-        String query = "SELECT "
+        String getQuery = "SELECT "
                 + SQLiteHelper.DEPARTMENT_COL_ID + ", "
                 + SQLiteHelper.DEPARTMENT_COL_NAME
                 + " FROM " + SQLiteHelper.TABLE_DEPARTMENTS
                 + " WHERE " + SQLiteHelper.DEPARTMENT_COL_ID + " = " + id + ";";
 
-        try {
-            Statement stmt = mConn.createStatement();
-            ResultSet resultSet = stmt.executeQuery(query);
+        mDatabase.connect();
+        Department department = resultSetToDepartment(mDatabase.executeQuery(getQuery));
+        mDatabase.disconnect();
 
-            return new Department(
-                    resultSet.getLong(SQLiteHelper.DEPARTMENT_COL_ID),
-                    resultSet.getString(SQLiteHelper.DEPARTMENT_COL_NAME)
-            );
-        } catch (SQLException e) {
-
-            return null;
-        }
+        return department;
     }
 
     @Override
     public List<Department> getAllDepartments() {
-        List<Department> departments = new ArrayList<>();
-
-        String query = "SELECT "
+        String getAllQuery = "SELECT "
                 + SQLiteHelper.DEPARTMENT_COL_ID + ", "
                 + SQLiteHelper.DEPARTMENT_COL_NAME
                 + " FROM " + SQLiteHelper.TABLE_DEPARTMENTS + ";";
 
-        try {
-            Statement stmt = mConn.createStatement();
-            ResultSet resultSet = stmt.executeQuery(query);
 
-            while (resultSet.next()) {
-                departments.add(new Department(
-                        resultSet.getLong(SQLiteHelper.DEPARTMENT_COL_ID),
-                        resultSet.getString(SQLiteHelper.DEPARTMENT_COL_NAME)
-                ));
-            }
-
-        } catch (SQLException e) {
-
-            //todo do nothing
-        }
+        mDatabase.connect();
+        List<Department> departments = resultSetToDepartments(
+                mDatabase.executeQuery(getAllQuery)
+        );
+        mDatabase.disconnect();
 
         return departments;
     }
@@ -97,14 +70,9 @@ public class SQLiteRepository implements IPersistence {
                 + " WHERE " + SQLiteHelper.DEPARTMENT_COL_ID + " = " + dep.getId()
                 + ";";
 
-        try {
-            Statement stmt = mConn.createStatement();
-            stmt.executeQuery(updateQuery);
-
-        } catch (SQLException e) {
-
-            //todo do smth
-        }
+        mDatabase.connect();
+        mDatabase.executeUpdate(updateQuery);
+        mDatabase.disconnect();
     }
 
     @Override
@@ -113,13 +81,9 @@ public class SQLiteRepository implements IPersistence {
                 + SQLiteHelper.TABLE_DEPARTMENTS
                 + " WHERE " + SQLiteHelper.DEPARTMENT_COL_ID + " = " + departmentId;
 
-        try {
-            Statement stmt = mConn.createStatement();
-            stmt.executeQuery(deleteQuery);
-        } catch (SQLException e) {
-
-            //todo do smth
-        }
+        mDatabase.connect();
+        mDatabase.executeUpdate(deleteQuery);
+        mDatabase.disconnect();
     }
 
     @Override
@@ -129,18 +93,11 @@ public class SQLiteRepository implements IPersistence {
                 + "( " + SQLiteHelper.EMPLOYEE_COL_NAME + ", " + SQLiteHelper.EMPLOYEE_COL_DEPARTMENT_ID + ")"
                 + " VALUES ('" + emp.getName() + "', " + departmentId + ");";
 
-        try {
-            Statement stmt = mConn.createStatement();
-            stmt.executeQuery(insertQuery);
+        mDatabase.connect();
+        int employeeId = mDatabase.executeUpdate(insertQuery);
+        mDatabase.disconnect();
 
-            return new Employee(
-                    getIdForEmployee(emp),
-                    emp.getName()
-            );
-        } catch (SQLException e) {
-
-            return null;
-        }
+        return new Employee(employeeId, emp.getName());
     }
 
     @Override
@@ -151,43 +108,27 @@ public class SQLiteRepository implements IPersistence {
                 + " FROM " + SQLiteHelper.TABLE_EMPLOYEES
                 + " WHERE " + SQLiteHelper.EMPLOYEE_COL_ID + " = " + id + ";";
 
-        try {
-            Statement stmt = mConn.createStatement();
-            ResultSet resultSet = stmt.executeQuery(selectQuery);
+        mDatabase.connect();
+        Employee employee = resultSetToEmployee(
+                mDatabase.executeQuery(selectQuery)
+        );
+        mDatabase.disconnect();
 
-            return new Employee(
-                    resultSet.getLong(SQLiteHelper.EMPLOYEE_COL_ID),
-                    resultSet.getString(SQLiteHelper.EMPLOYEE_COL_NAME)
-            );
-        } catch (SQLException e) {
-
-            return null;
-        }
+        return employee;
     }
 
     @Override
-    public List<Employee> getEmployees() {
-        List<Employee> employees = new ArrayList<>();
-
+    public List<Employee> getAllEmployees() {
         String selectQuery = "SELECT "
                 + SQLiteHelper.EMPLOYEE_COL_ID + ", "
                 + SQLiteHelper.EMPLOYEE_COL_NAME
                 + " FROM " + SQLiteHelper.TABLE_EMPLOYEES + ";";
 
-        try {
-            Statement stmt = mConn.createStatement();
-            ResultSet resultSet = stmt.executeQuery(selectQuery);
-
-            while (resultSet.next()) {
-                employees.add(new Employee(
-                        resultSet.getLong(SQLiteHelper.EMPLOYEE_COL_ID),
-                        resultSet.getString(SQLiteHelper.EMPLOYEE_COL_NAME)
-                ));
-            }
-        } catch (SQLException e) {
-
-            //todo do smth
-        }
+        mDatabase.connect();
+        List<Employee> employees = resultSetToEmployees(
+                mDatabase.executeQuery(selectQuery)
+        );
+        mDatabase.disconnect();
 
         return employees;
     }
@@ -200,14 +141,9 @@ public class SQLiteRepository implements IPersistence {
                 + " WHERE " + SQLiteHelper.EMPLOYEE_COL_ID + " = " + emp.getId()
                 + ";";
 
-        try {
-            Statement stmt = mConn.createStatement();
-            stmt.execute(updateQuery);
-
-        } catch (SQLException e) {
-
-            //todo do smth
-        }
+        mDatabase.connect();
+        mDatabase.executeUpdate(updateQuery);
+        mDatabase.disconnect();
     }
 
     @Override
@@ -217,48 +153,70 @@ public class SQLiteRepository implements IPersistence {
                 + " WHERE " + SQLiteHelper.EMPLOYEE_COL_ID + " = " + employeeId
                 + ";";
 
-        try {
-            Statement stmt = mConn.createStatement();
-            stmt.execute(deleteQuery);
-
-        } catch (SQLException e) {
-
-            //todo do smth
-        }
-
+        mDatabase.connect();
+        mDatabase.executeUpdate(deleteQuery);
+        mDatabase.disconnect();
     }
 
-    private long getIdForDepartment(Department dep) {
-        String selectQuery = "SELECT "
-                + SQLiteHelper.DEPARTMENT_COL_ID
-                + " FROM " + SQLiteHelper.TABLE_DEPARTMENTS
-                + " WHERE " + SQLiteHelper.DEPARTMENT_COL_NAME + " = '" + dep.getName() + "'";
-
+    private List<Department> resultSetToDepartments(ResultSet resultSet) {
         try {
-            Statement stmt = mConn.createStatement();
-            ResultSet rs = stmt.executeQuery(selectQuery);
+            List<Department> departments = new ArrayList<>();
+            // TODO: Sollte ich das Department auf NULL prüfen?
+            while (resultSet.next()) {
+                departments.add(resultSetToDepartment(resultSet));
+            }
 
-            return rs.getLong(SQLiteHelper.EMPLOYEE_COL_ID);
+            return departments;
         } catch (SQLException e) {
+            log(e.getMessage());
 
-            return -1;
+            return new ArrayList<>();
         }
     }
 
-    private long getIdForEmployee(Employee emp) {
-        String selectQuery = "SELECT "
-                + SQLiteHelper.EMPLOYEE_COL_ID
-                + " FROM " + SQLiteHelper.TABLE_EMPLOYEES
-                + " WHERE " + SQLiteHelper.EMPLOYEE_COL_NAME + " = " + emp.getName();
-
+    private List<Employee> resultSetToEmployees(ResultSet resultSet) {
         try {
-            Statement stmt = mConn.createStatement();
-            ResultSet rs = stmt.executeQuery(selectQuery);
+            List<Employee> departments = new ArrayList<>();
+            // TODO: Sollte ich den Employee auf NULL prüfen?
+            while (resultSet.next()) {
+                departments.add(resultSetToEmployee(resultSet));
+            }
 
-            return rs.getLong(SQLiteHelper.EMPLOYEE_COL_ID);
+            return departments;
         } catch (SQLException e) {
+            log(e.getMessage());
 
-            return -1;
+            return new ArrayList<>();
         }
+    }
+
+    private Department resultSetToDepartment(ResultSet resultSet) {
+        try {
+            return new Department(
+                    resultSet.getLong(SQLiteHelper.DEPARTMENT_COL_ID),
+                    resultSet.getString(SQLiteHelper.DEPARTMENT_COL_NAME)
+            );
+        } catch (SQLException e) {
+            log(e.getMessage());
+
+            return null;
+        }
+    }
+
+    private Employee resultSetToEmployee(ResultSet resultSet) {
+        try {
+            return new Employee(
+                    resultSet.getLong(SQLiteHelper.EMPLOYEE_COL_ID),
+                    resultSet.getString(SQLiteHelper.EMPLOYEE_COL_NAME)
+            );
+        } catch (SQLException e) {
+            log(e.getMessage());
+
+            return null;
+        }
+    }
+
+    private void log(String message) {
+        System.out.println(message);
     }
 }

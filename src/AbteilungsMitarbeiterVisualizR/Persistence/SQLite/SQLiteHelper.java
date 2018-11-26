@@ -4,7 +4,7 @@ import java.io.File;
 import java.sql.*;
 
 public class SQLiteHelper {
-    private static final String DATABASE_NAME = "abteilungsMitarbeiterVisualizR.db";
+    static final String DATABASE_NAME = "abteilungsMitarbeiterVisualizR.db";
 
     static final String TABLE_DEPARTMENTS = "departments";
     static final String DEPARTMENT_COL_ID = "id";
@@ -39,7 +39,7 @@ public class SQLiteHelper {
             createTables(con);
     }
 
-    static Connection getConnection() {
+    private static Connection getConnection() {
         String url = String.format("jdbc:sqlite:%s/%s", getDatabaseDir(), DATABASE_NAME);
         try {
             return DriverManager.getConnection(url);
@@ -56,7 +56,7 @@ public class SQLiteHelper {
 
         } catch (SQLException e) {
 
-            // TODO what to do on SQLException ?
+            System.out.println("Could not create required tables. Please restart the Application.");
         }
     }
 
