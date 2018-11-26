@@ -1,5 +1,7 @@
 package AbteilungsMitarbeiterVisualizR.Persistence.SQLite;
 
+import AbteilungsMitarbeiterVisualizR.Log;
+
 import java.io.File;
 import java.sql.*;
 
@@ -28,39 +30,21 @@ public class SQLiteHelper {
             + EMPLOYEE_COL_DEPARTMENT_ID + " INTEGER NOT NULL"
             + ")";
 
-    public static void initializeDatabase() {
-        // TODO muss ich wirklich überprüfen ob die datenbank schon erstellt wurde? die tabellen werden ja mit dem Befehl "CREATE TABLE IF NOT EXISTS ..." angelegt
-        if (databaseFileExists())
+    public static void initializeDatabase(SQLiteDatabaseHandler databaseHandler) {
+        if (databaseExists())
             return;
 
-        Connection con = getConnection();
-
-        if (null != con)
-            createTables(con);
+        databaseHandler.connect();
+        createTables(databaseHandler);
+        databaseHandler.disconnect();
     }
 
-    private static Connection getConnection() {
-        String url = String.format("jdbc:sqlite:%s/%s", getDatabaseDir(), DATABASE_NAME);
-        try {
-            return DriverManager.getConnection(url);
-        } catch (SQLException e) {
-            return null;
-        }
+    private static void createTables(SQLiteDatabaseHandler handler) {
+        handler.execute(CREATE_DEPARTMENTS_TABLE);
+        handler.execute(CREATE_EMPLOYEE_TABLE);
     }
 
-    private static void createTables(Connection connection) {
-        try {
-            Statement stmt = connection.createStatement();
-            stmt.execute(CREATE_DEPARTMENTS_TABLE);
-            stmt.execute(CREATE_EMPLOYEE_TABLE);
-
-        } catch (SQLException e) {
-
-            System.out.println("Could not create required tables. Please restart the Application.");
-        }
-    }
-
-    private static boolean databaseFileExists() {
+    private static boolean databaseExists() {
         File file = new File(String.format("%s/%s", getDatabaseDir(), DATABASE_NAME));
         return file.exists();
     }

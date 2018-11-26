@@ -11,7 +11,7 @@ public class Main {
     public static void main(String args[]) {
         System.out.println("Hello World!");
 
-        SQLiteHelper.initializeDatabase();
+        SQLiteHelper.initializeDatabase(new SQLiteDatabaseHandler());
 
         SQLiteRepository repo = new SQLiteRepository(new SQLiteDatabaseHandler());
         repo.saveDepartment(new Department("Abteilung 1"));

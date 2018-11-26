@@ -1,5 +1,7 @@
 package AbteilungsMitarbeiterVisualizR.Persistence.SQLite;
 
+import AbteilungsMitarbeiterVisualizR.Log;
+
 import java.sql.*;
 
 public class SQLiteDatabaseHandler {
@@ -7,9 +9,9 @@ public class SQLiteDatabaseHandler {
 
     int executeUpdate(String sql) {
         try {
-            Statement stmt = connection.createStatement();
-
-            return stmt.executeUpdate(sql);
+            return connection
+                    .createStatement()
+                    .executeUpdate(sql);
         } catch (SQLException e) {
             return -1;
         }
@@ -17,11 +19,22 @@ public class SQLiteDatabaseHandler {
 
     ResultSet executeQuery(String sql) {
         try {
-            Statement stmt = connection.createStatement();
-
-            return stmt.executeQuery(sql);
+            return connection
+                    .createStatement()
+                    .executeQuery(sql);
         } catch (SQLException e) {
             return null;
+        }
+    }
+
+    boolean execute(String sql) {
+        try {
+            return connection
+                    .createStatement()
+                    .execute(sql);
+        } catch (SQLException e) {
+
+            return false;
         }
     }
 
@@ -37,6 +50,7 @@ public class SQLiteDatabaseHandler {
 
         } catch (SQLException e) {
 
+            Log.error("Failed to disconnect from the database.", e);
         }
     }
 
@@ -44,6 +58,8 @@ public class SQLiteDatabaseHandler {
         try {
             return DriverManager.getConnection(getUrl());
         } catch (SQLException e) {
+            Log.error("Could not establish database connection", e);
+
             return null;
         }
     }

@@ -2,6 +2,7 @@ package AbteilungsMitarbeiterVisualizR.Persistence.SQLite;
 
 import AbteilungsMitarbeiterVisualizR.Entities.Department;
 import AbteilungsMitarbeiterVisualizR.Entities.Employee;
+import AbteilungsMitarbeiterVisualizR.Log;
 import AbteilungsMitarbeiterVisualizR.Persistence.IPersistence;
 
 import java.sql.*;
@@ -161,14 +162,15 @@ public class SQLiteRepository implements IPersistence {
     private List<Department> resultSetToDepartments(ResultSet resultSet) {
         try {
             List<Department> departments = new ArrayList<>();
-            // TODO: Sollte ich das Department auf NULL prüfen?
             while (resultSet.next()) {
-                departments.add(resultSetToDepartment(resultSet));
+                Department dep = resultSetToDepartment(resultSet);
+                if (null != dep)
+                    departments.add(resultSetToDepartment(resultSet));
             }
 
             return departments;
         } catch (SQLException e) {
-            log(e.getMessage());
+            Log.error(e.getMessage(), e);
 
             return new ArrayList<>();
         }
@@ -177,14 +179,15 @@ public class SQLiteRepository implements IPersistence {
     private List<Employee> resultSetToEmployees(ResultSet resultSet) {
         try {
             List<Employee> departments = new ArrayList<>();
-            // TODO: Sollte ich den Employee auf NULL prüfen?
             while (resultSet.next()) {
-                departments.add(resultSetToEmployee(resultSet));
+                Employee dep = resultSetToEmployee(resultSet);
+                if (null != dep)
+                    departments.add(resultSetToEmployee(resultSet));
             }
 
             return departments;
         } catch (SQLException e) {
-            log(e.getMessage());
+            Log.error(e.getMessage(), e);
 
             return new ArrayList<>();
         }
@@ -197,7 +200,7 @@ public class SQLiteRepository implements IPersistence {
                     resultSet.getString(SQLiteHelper.DEPARTMENT_COL_NAME)
             );
         } catch (SQLException e) {
-            log(e.getMessage());
+            Log.error(e.getMessage(), e);
 
             return null;
         }
@@ -210,13 +213,9 @@ public class SQLiteRepository implements IPersistence {
                     resultSet.getString(SQLiteHelper.EMPLOYEE_COL_NAME)
             );
         } catch (SQLException e) {
-            log(e.getMessage());
+            Log.error(e.getMessage(), e);
 
             return null;
         }
-    }
-
-    private void log(String message) {
-        System.out.println(message);
     }
 }
