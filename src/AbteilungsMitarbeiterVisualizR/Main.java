@@ -20,6 +20,9 @@ public class Main {
         //sqlite.saveDepartment(department3);
         //sqlite.saveDepartment(department4);
 
+        //Employee emp4 = new Employee("Max Mustermann");
+        //sqlite.saveEmployee(emp4, 1);
+
         //System.out.println(sqlite.getDepartment(3).getName());
 
         // Example, does not have to look like this
