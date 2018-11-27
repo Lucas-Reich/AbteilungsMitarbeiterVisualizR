@@ -277,7 +277,7 @@ public class XMLHelper implements IPersistence {
         for (int i = 0; i < childNodes.getLength(); i++) {
             Element childElement = (Element) childNodes.item(i);
             Employee em = new Employee(Long.valueOf(childElement.getAttribute("id")), childElement.getAttribute("name"));
-            department.addMitarbeiter(em);
+            department.addEmployee(em);
         }
     }
 

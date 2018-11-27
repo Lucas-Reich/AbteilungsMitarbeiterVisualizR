@@ -1,7 +1,5 @@
 package AbteilungsMitarbeiterVisualizR.Entities;
 
-import org.w3c.dom.events.Event;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +34,7 @@ public class Department {
         this.name = name;
     }
 
-    public void addMitarbeiter(Employee employee) {
+    public void addEmployee(Employee employee) {
         employees.add(employee);
     }
 

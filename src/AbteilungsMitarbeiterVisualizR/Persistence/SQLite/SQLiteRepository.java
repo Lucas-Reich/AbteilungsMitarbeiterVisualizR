@@ -119,11 +119,13 @@ public class SQLiteRepository implements IPersistence {
     }
 
     @Override
-    public List<Employee> getAllEmployees() {
+    public List<Employee> getEmployees(long departmentId) {
         String selectQuery = "SELECT "
                 + SQLiteHelper.EMPLOYEE_COL_ID + ", "
                 + SQLiteHelper.EMPLOYEE_COL_NAME
-                + " FROM " + SQLiteHelper.TABLE_EMPLOYEES + ";";
+                + " FROM " + SQLiteHelper.TABLE_EMPLOYEES
+                + " WHERE " + SQLiteHelper.EMPLOYEE_COL_DEPARTMENT_ID + " = " + departmentId
+                + ";";
 
         mDatabase.connect();
         List<Employee> employees = resultSetToEmployees(
@@ -195,10 +197,16 @@ public class SQLiteRepository implements IPersistence {
 
     private Department resultSetToDepartment(ResultSet resultSet) {
         try {
-            return new Department(
+            Department department = new Department(
                     resultSet.getLong(SQLiteHelper.DEPARTMENT_COL_ID),
                     resultSet.getString(SQLiteHelper.DEPARTMENT_COL_NAME)
             );
+
+            List<Employee> employees = getEmployees(department.getId());
+            for (Employee employee : employees) {
+                department.addEmployee(employee);
+            }
+            return department;
         } catch (SQLException e) {
             Log.error(e.getMessage(), e);
 

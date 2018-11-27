@@ -72,7 +72,7 @@ public class Fachkonzept1 implements IFachkonzept {
 
     @Override
     public List<Employee> getEmployees(long departmentId) {
-        List<Employee> employees = mPersistence.getEmployees();
+        List<Employee> employees = mPersistence.getEmployees(departmentId);
 
         employees.sort(new Comparator<Employee>() {
             @Override
