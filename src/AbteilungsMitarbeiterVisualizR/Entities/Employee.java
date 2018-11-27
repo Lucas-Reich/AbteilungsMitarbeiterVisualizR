@@ -39,4 +39,8 @@ public class Employee {
         return this.getId() == other.getId()
                 && this.getName().equals(other.getName());
     }
+    @Override
+    public String toString() {
+        return name;
+    }
 }

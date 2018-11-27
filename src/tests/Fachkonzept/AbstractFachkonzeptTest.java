@@ -4,6 +4,7 @@ import AbteilungsMitarbeiterVisualizR.Entities.Department;
 import AbteilungsMitarbeiterVisualizR.Entities.Employee;
 import AbteilungsMitarbeiterVisualizR.Fachkonzept.IFachkonzept;
 import AbteilungsMitarbeiterVisualizR.Persistence.IPersistence;
+import org.junit.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,6 +12,7 @@ import org.junit.Test;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
@@ -35,7 +37,7 @@ public abstract class AbstractFachkonzeptTest {
     @Test
     public void testGetProjectName() {
         assertEquals(
-                "Without e and with a capital R!",
+                (Object) "Without e and with a capital R!",
                 "AbteilungsMitarbeiterVisualizR",
                 mFachkonzept.getProjectName()
         );

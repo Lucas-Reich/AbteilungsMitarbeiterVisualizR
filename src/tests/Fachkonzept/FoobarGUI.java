@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 public class FoobarGUI {
@@ -41,10 +42,16 @@ public class FoobarGUI {
         //departments als object adden:
         //abteilungsListModel.addElement(departments);
         //items aus departments einzeln adden:
-        abteilungsListModel.addAll(departments);
+        //abteilungsListModel.addAll(departments);
+
 
         abteilungsliste.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         abteilungsliste.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+
+        for(Iterator departmentsList = departments.iterator(); departmentsList.hasNext(); )
+        {
+            abteilungsListModel.addElement(departmentsList.next());
+        }
 
         abteilungsliste = new JList(abteilungsListModel);
     }
@@ -53,7 +60,12 @@ public class FoobarGUI {
     public void setEmployeesData(List<Employee> employees) {
         mitarbeiterListModel = new DefaultListModel();
 
-        mitarbeiterListModel.addAll(employees);
+        //mitarbeiterListModel.addElement(employees);
+
+        for(Iterator mitarbeiterList = employees.iterator(); mitarbeiterList.hasNext(); )
+        {
+            mitarbeiterListModel.addElement(mitarbeiterList.next());
+        }
 
         mitarbeiterliste.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         mitarbeiterliste.setLayoutOrientation(JList.HORIZONTAL_WRAP);
@@ -106,7 +118,14 @@ public class FoobarGUI {
         mitarbeiterliste.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                abteilungIdTextfield.setText(String.valueOf(mitarbeiterliste.getSelectedIndices()));
+                abteilungIdTextfield.setText(String.valueOf(mitarbeiterliste));
+            }
+        });
+
+        abteilungChangeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //textField1.setEditable(true);
             }
         });
     }
@@ -151,6 +170,7 @@ public class FoobarGUI {
         mitarbeiterDeleteButton.setBounds(395, 235, 90, 25);
         mitarbeiterChangeButton.setBounds(500, 235, 120, 25);
         textField1.setBounds(5, 280, 300, 100);
+        textField1.setEditable(false);
         abteilungIdTextfield.setBounds(320, 280, 85, 25);
 
         //Display the window.
