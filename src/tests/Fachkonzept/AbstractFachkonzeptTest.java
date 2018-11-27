@@ -130,7 +130,7 @@ public abstract class AbstractFachkonzeptTest {
     @Test
     public void testGetEmployees() {
         IPersistence persistence = mock(IPersistence.class);
-        when(persistence.getEmployees()).thenReturn(getEmployeesSortedById());
+        when(persistence.getEmployees(anyLong())).thenReturn(getEmployeesSortedById());
 
         List<Employee> expectedEmployees = getEmployeesSortedByName();
         List<Employee> actualEmployees = mFachkonzept.getEmployees(1);

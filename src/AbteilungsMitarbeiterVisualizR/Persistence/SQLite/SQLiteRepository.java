@@ -166,7 +166,7 @@ public class SQLiteRepository implements IPersistence {
     }
 
     @Override
-    public List<Employee> getEmployees() {
+    public List<Employee> getEmployees(long id) {
         List<Employee> employees = new ArrayList<>();
 
         String selectQuery = "SELECT "

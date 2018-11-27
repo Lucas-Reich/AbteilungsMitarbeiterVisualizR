@@ -33,6 +33,8 @@ public class FoobarGUI {
     private JButton mitarbeiterDeleteButton;
     private JButton mitarbeiterChangeButton;
     private JTextField textField1;
+    private JScrollPane abteilungslisteScroll;
+    private JScrollPane mitarbeiterlisteScroll;
     private JTextField abteilungIdTextfield;
 
 
@@ -121,13 +123,6 @@ public class FoobarGUI {
                 abteilungIdTextfield.setText(String.valueOf(mitarbeiterliste));
             }
         });
-
-        abteilungChangeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //textField1.setEditable(true);
-            }
-        });
     }
 
     public void createAndShowGUI() {
@@ -148,8 +143,11 @@ public class FoobarGUI {
         abteilungIdTextfield = new JTextField();
 
         panel.add(abteilungLabel);
+        panel.add(abteilungslisteScroll);
         panel.add(abteilungsliste);
+        abteilungslisteScroll.add(abteilungsliste);
         panel.add(mitarbeiterLabel);
+        panel.add(mitarbeiterlisteScroll);
         panel.add(mitarbeiterliste);
         panel.add(abteilungAddButton);
         panel.add(abteilungDeleteButton);
@@ -160,7 +158,8 @@ public class FoobarGUI {
         panel.add(textField1);
         panel.add(abteilungIdTextfield);
         abteilungLabel.setBounds(5, 15, 300, 30);
-        abteilungsliste.setBounds(5, 45, 300, 180);
+        abteilungslisteScroll.setBounds(5, 45, 300, 180);
+        //abteilungsliste.setBounds(5, 45, 300, 180);
         mitarbeiterLabel.setBounds(320, 15, 300, 30);
         mitarbeiterliste.setBounds(320, 45, 300, 180);
         abteilungAddButton.setBounds(5, 235, 60, 25);
