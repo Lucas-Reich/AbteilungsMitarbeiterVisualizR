@@ -123,7 +123,7 @@ public class XMLHelper implements IPersistence {
             }
             Department dp = new Department(Long.valueOf(element.getAttribute("id")), element.getAttribute("name"));
             if (element.getChildNodes() != null) {
-                addEmployesToDepartment(element,dp);
+                addEmployeesToDepartment(element,dp);
             }
             return dp;
         } catch (ParserConfigurationException e) {
@@ -151,7 +151,7 @@ public class XMLHelper implements IPersistence {
                     Element element = (Element) nl.item(i);
                     Department dp = new Department(Long.valueOf(element.getAttribute("id")), element.getAttribute("name"));
                     if (element.getChildNodes() != null) {
-                        addEmployesToDepartment(element,dp);
+                        addEmployeesToDepartment(element,dp);
                     }
                     departments.add(dp);
                 }
@@ -181,8 +181,6 @@ public class XMLHelper implements IPersistence {
                         element.getAttributes().getNamedItem("id").setNodeValue(String.valueOf(department.getId()));
                         element.getAttributes().getNamedItem("name").setNodeValue(department.getName());
                     }
-
-
                 }
             }
             transFactory = TransformerFactory.newInstance();
@@ -208,6 +206,35 @@ public class XMLHelper implements IPersistence {
 
     @Override
     public void deleteDepartment(long departmentId) {
+        docFactory = DocumentBuilderFactory.newInstance();
+        try {
+            docBuilder = docFactory.newDocumentBuilder();
+            doc = docBuilder.parse(XMLFile);
+
+            NodeList departments = doc.getElementsByTagName("Department");
+            for(int i = 0; i < departments.getLength(); i++){
+                Element element = (Element) departments.item(i);
+                if(element.getAttribute("id").equals(String.valueOf(departmentId))){
+                    element.getParentNode().removeChild(element);
+                }
+            }
+            transFactory = TransformerFactory.newInstance();
+            transformer = transFactory.newTransformer();
+            source = new DOMSource(doc);
+            result = new StreamResult(XMLFile);
+            transformer.transform(source, result);
+
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (TransformerConfigurationException e) {
+            e.printStackTrace();
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -222,7 +249,7 @@ public class XMLHelper implements IPersistence {
     }
 
     @Override
-    public List<Employee> getEmployees() {
+    public List<Employee> getEmployees(long id) {
         return null;
     }
 
@@ -245,7 +272,7 @@ public class XMLHelper implements IPersistence {
         return System.getProperty("user.dir") + "/assets/XML";
     }
 
-    private void addEmployesToDepartment(Element element, Department department){
+    private void addEmployeesToDepartment(Element element, Department department){
         NodeList childNodes = element.getChildNodes();
         for (int i = 0; i < childNodes.getLength(); i++) {
             Element childElement = (Element) childNodes.item(i);
