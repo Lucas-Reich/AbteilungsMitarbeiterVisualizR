@@ -21,7 +21,7 @@ public interface IPersistence {
 
     Employee getEmployee(long id);
 
-    List<Employee> getAllEmployees();
+    List<Employee> getEmployees(long departmentId);
 
     void updateEmployee(Employee employee);
 
