@@ -182,7 +182,7 @@ public class XMLHelper implements IPersistence {
     }
 
     @Override
-    public List<Employee> getAllEmployees() {
+    public List<Employee> getEmployees() {
         return null;
     }
 
