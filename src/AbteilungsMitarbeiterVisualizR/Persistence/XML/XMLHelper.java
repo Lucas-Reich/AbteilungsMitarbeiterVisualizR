@@ -120,11 +120,7 @@ public class XMLHelper implements IPersistence {
             if (element.getChildNodes() != null) {
                 addEmployeesToDepartment(element, dp);
             }
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
         }
         return dp;

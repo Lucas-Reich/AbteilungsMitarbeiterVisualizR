@@ -6,7 +6,7 @@ import java.io.File;
 import java.sql.*;
 
 public class SQLiteHelper {
-    static final String DATABASE_NAME = "abteilungsMitarbeiterVisualizR.db";
+    public static final String DATABASE_NAME = "abteilungsMitarbeiterVisualizR.db";
 
     static final String TABLE_DEPARTMENTS = "departments";
     static final String DEPARTMENT_COL_ID = "id";
@@ -49,7 +49,7 @@ public class SQLiteHelper {
         return file.exists();
     }
 
-    private static String getDatabaseDir() {
+    public static String getDatabaseDir() {
         return System.getProperty("user.dir") + "/assets/SQLite";
     }
 }

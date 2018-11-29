@@ -1,4 +1,4 @@
-package tests.Fachkonzept;
+package tests.Fachkonzept.Fachkonzept;
 
 import AbteilungsMitarbeiterVisualizR.Entities.Department;
 import AbteilungsMitarbeiterVisualizR.Entities.Employee;
@@ -128,7 +128,7 @@ public abstract class AbstractFachkonzeptTest {
     @Test
     public void testGetEmployees() {
         IPersistence persistence = mock(IPersistence.class);
-        when(persistence.getEmployees()).thenReturn(getEmployeesSortedById());
+        when(persistence.getEmployees(anyInt())).thenReturn(getEmployeesSortedById());
 
         List<Employee> expectedEmployees = getEmployeesSortedByName();
         List<Employee> actualEmployees = mFachkonzept.getEmployees(1);
