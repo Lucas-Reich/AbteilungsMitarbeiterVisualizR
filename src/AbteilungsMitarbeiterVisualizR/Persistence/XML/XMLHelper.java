@@ -40,7 +40,7 @@ public class XMLHelper implements IPersistence {
 
     public XMLHelper() {
         if (!checkXMLFileExists()) {
-            this.XMLFile = new File(String.format("%s/%s", getXMLDir(), XML_FILE_NAME));
+            initializeXmlFile();
         } else {
             this.XMLFile = new File(String.valueOf(filePath));
         }
@@ -48,15 +48,14 @@ public class XMLHelper implements IPersistence {
 
     @Override
     public Department saveDepartment(Department department) {
+        Element departmentCounter = null;
+        Element employeeCounter = null;
         Element departments = null;
         try {
             docFactory = DocumentBuilderFactory.newInstance();
             docBuilder = docFactory.newDocumentBuilder();
-            if (XMLFile != null && XMLFile.length() > 0) {
-                doc = docBuilder.parse(XMLFile);
-            } else {
-                doc = docBuilder.newDocument();
-            }
+            doc = docBuilder.parse(XMLFile);
+
             //Check if department already exists
             NodeList nl = doc.getElementsByTagName("Department");
             for (int i = 0; i < nl.getLength(); i++) {
@@ -65,13 +64,8 @@ public class XMLHelper implements IPersistence {
                     //todo throw new Exception??
                 }
             }
-            //check if element departments exists
-            if (doc.getElementsByTagName("Departments").getLength() > 0) {
-                departments = (Element) doc.getFirstChild();
-            } else {
-                departments = doc.createElement("Departments");
-                doc.appendChild(departments);
-            }
+            departments = (Element) doc.getElementsByTagName("Departments");
+            departmentCounter = (Element) doc.getElementsByTagName("DepartmentCounter");
 
             Element departmentElement = doc.createElement("Department");
             departments.appendChild(departmentElement);
@@ -109,6 +103,7 @@ public class XMLHelper implements IPersistence {
 
     @Override
     public Department getDepartment(long id) {
+        Department dp = null;
         try {
             docFactory = DocumentBuilderFactory.newInstance();
             docBuilder = docFactory.newDocumentBuilder();
@@ -121,11 +116,10 @@ public class XMLHelper implements IPersistence {
                     element = (Element) list.item(i);
                 }
             }
-            Department dp = new Department(Long.valueOf(element.getAttribute("id")), element.getAttribute("name"));
+            dp = new Department(Long.valueOf(element.getAttribute("id")), element.getAttribute("name"));
             if (element.getChildNodes() != null) {
-                addEmployeesToDepartment(element,dp);
+                addEmployeesToDepartment(element, dp);
             }
-            return dp;
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         } catch (SAXException e) {
@@ -133,9 +127,7 @@ public class XMLHelper implements IPersistence {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-        return null;
+        return dp;
     }
 
     @Override
@@ -151,7 +143,7 @@ public class XMLHelper implements IPersistence {
                     Element element = (Element) nl.item(i);
                     Department dp = new Department(Long.valueOf(element.getAttribute("id")), element.getAttribute("name"));
                     if (element.getChildNodes() != null) {
-                        addEmployeesToDepartment(element,dp);
+                        addEmployeesToDepartment(element, dp);
                     }
                     departments.add(dp);
                 }
@@ -212,9 +204,9 @@ public class XMLHelper implements IPersistence {
             doc = docBuilder.parse(XMLFile);
 
             NodeList departments = doc.getElementsByTagName("Department");
-            for(int i = 0; i < departments.getLength(); i++){
+            for (int i = 0; i < departments.getLength(); i++) {
                 Element element = (Element) departments.item(i);
-                if(element.getAttribute("id").equals(String.valueOf(departmentId))){
+                if (element.getAttribute("id").equals(String.valueOf(departmentId))) {
                     element.getParentNode().removeChild(element);
                 }
             }
@@ -268,11 +260,49 @@ public class XMLHelper implements IPersistence {
         return Files.exists(filePath);
     }
 
+    private void initializeXmlFile() {
+        this.XMLFile = new File(String.format("%s/%s", getXMLDir(), XML_FILE_NAME));
+        try {
+            docFactory = DocumentBuilderFactory.newInstance();
+            docBuilder = docFactory.newDocumentBuilder();
+            doc = docBuilder.newDocument();
+
+            Element departmentCounter = doc.createElement("DepartmentCounter");
+            Attr attrDepartmentCounter = doc.createAttribute("counter");
+            attrDepartmentCounter.setValue(String.valueOf(1));
+            departmentCounter.setAttributeNode(attrDepartmentCounter);
+
+            Element employeeCounter = doc.createElement("EmployeeCounter");
+            Attr attrEmployeeCounter = doc.createAttribute("counter");
+            attrEmployeeCounter.setValue(String.valueOf(1));
+            employeeCounter.setAttributeNode(attrEmployeeCounter);
+
+            Element departments = doc.createElement("Departments");
+            doc.appendChild(departments);
+
+            Element employees = doc.createElement("Employees");
+            doc.appendChild(employees);
+
+            transFactory = TransformerFactory.newInstance();
+            transformer = transFactory.newTransformer();
+            source = new DOMSource(doc);
+            result = new StreamResult(XMLFile);
+            transformer.transform(source, result);
+
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (TransformerConfigurationException e) {
+            e.printStackTrace();
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
+    }
+
     private String getXMLDir() {
         return System.getProperty("user.dir") + "/assets/XML";
     }
 
-    private void addEmployeesToDepartment(Element element, Department department){
+    private void addEmployeesToDepartment(Element element, Department department) {
         NodeList childNodes = element.getChildNodes();
         for (int i = 0; i < childNodes.getLength(); i++) {
             Element childElement = (Element) childNodes.item(i);
