@@ -51,6 +51,7 @@ public class XMLHelper implements IPersistence {
         Element departmentCounter = null;
         Element employeeCounter = null;
         Element departments = null;
+        Element departmentElement = null;
         try {
             docFactory = DocumentBuilderFactory.newInstance();
             docBuilder = docFactory.newDocumentBuilder();
@@ -67,11 +68,11 @@ public class XMLHelper implements IPersistence {
             departments = (Element) doc.getElementsByTagName("Departments");
             departmentCounter = (Element) doc.getElementsByTagName("DepartmentCounter");
 
-            Element departmentElement = doc.createElement("Department");
+            departmentElement = doc.createElement("Department");
             departments.appendChild(departmentElement);
 
             Attr attrDepartmentId = doc.createAttribute("id");
-            attrDepartmentId.setValue(String.valueOf(department.getId()));
+            attrDepartmentId.setValue(departmentCounter.getAttribute("counter"));
             departmentElement.setAttributeNode(attrDepartmentId);
 
             Attr attrDepartmentName = doc.createAttribute("name");
@@ -84,21 +85,13 @@ public class XMLHelper implements IPersistence {
             result = new StreamResult(XMLFile);
             transformer.transform(source, result);
 
-        } catch (ParserConfigurationException e) {
+        } catch (ParserConfigurationException | DOMException e) {
             System.out.println(e.getMessage());
-        } catch (DOMException e) {
-            System.out.println(e.getMessage());
-        } catch (TransformerConfigurationException e) {
-            e.printStackTrace();
-        } catch (TransformerException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (TransformerException | SAXException | IOException e) {
             e.printStackTrace();
         }
 
-        return null;
+        return new Department(Long.valueOf(departmentElement.getAttribute("id")), departmentElement.getAttribute("name"));
     }
 
     @Override
@@ -116,15 +109,13 @@ public class XMLHelper implements IPersistence {
                     element = (Element) list.item(i);
                 }
             }
-            dp = new Department(Long.valueOf(element.getAttribute("id")), element.getAttribute("name"));
-            if (element.getChildNodes() != null) {
-                addEmployeesToDepartment(element, dp);
+            if (element != null) {
+                dp = new Department(Long.valueOf(element.getAttribute("id")), element.getAttribute("name"));
+                if (element.getChildNodes() != null) {
+                    addEmployeesToDepartment(element, dp);
+                }
             }
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
         }
         return dp;
@@ -149,11 +140,7 @@ public class XMLHelper implements IPersistence {
                 }
 
             }
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
         }
         return departments;
@@ -182,15 +169,7 @@ public class XMLHelper implements IPersistence {
             transformer.transform(source, result);
 
 
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (TransformerConfigurationException e) {
-            e.printStackTrace();
-        } catch (TransformerException e) {
+        } catch (ParserConfigurationException | SAXException | IOException | TransformerException e) {
             e.printStackTrace();
         }
 
@@ -216,15 +195,7 @@ public class XMLHelper implements IPersistence {
             result = new StreamResult(XMLFile);
             transformer.transform(source, result);
 
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (TransformerConfigurationException e) {
-            e.printStackTrace();
-        } catch (TransformerException e) {
+        } catch (ParserConfigurationException | SAXException | IOException | TransformerException e) {
             e.printStackTrace();
         }
 
@@ -289,11 +260,7 @@ public class XMLHelper implements IPersistence {
             result = new StreamResult(XMLFile);
             transformer.transform(source, result);
 
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (TransformerConfigurationException e) {
-            e.printStackTrace();
-        } catch (TransformerException e) {
+        } catch (ParserConfigurationException | TransformerException e) {
             e.printStackTrace();
         }
     }
