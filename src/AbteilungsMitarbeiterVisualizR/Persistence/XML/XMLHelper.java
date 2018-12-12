@@ -10,7 +10,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -24,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class XMLHelper implements IPersistence {
-    // TODO implement me
 
     static final String XML_FILE_NAME = "abteilungsMitarbeiterVisualizR.xml";
 
@@ -42,15 +40,12 @@ public class XMLHelper implements IPersistence {
         if (!checkXMLFileExists()) {
             initializeXmlFile();
         } else {
-            this.XMLFile = new File(String.valueOf(filePath));
+            XMLFile = new File(String.valueOf(filePath));
         }
     }
 
     @Override
     public Department saveDepartment(Department department) {
-        Element departmentCounter = null;
-        Element employeeCounter = null;
-        Element departments = null;
         Element departmentElement = null;
         try {
             docFactory = DocumentBuilderFactory.newInstance();
@@ -65,8 +60,12 @@ public class XMLHelper implements IPersistence {
                     //todo throw new Exception??
                 }
             }
-            departments = (Element) doc.getElementsByTagName("Departments");
-            departmentCounter = (Element) doc.getElementsByTagName("DepartmentCounter");
+            NodeList departmentNl = doc.getElementsByTagName("Departments");
+            Element departments = (Element) departmentNl.item(0);
+            NodeList departmentCounterNl = doc.getElementsByTagName("DepartmentCounter");
+            Element departmentCounter = (Element) departmentCounterNl.item(0);
+
+            departmentCounter.getAttributes().getNamedItem("counter").setNodeValue(String.valueOf(Integer.valueOf(departmentCounter.getAttribute("counter")) + 1));
 
             departmentElement = doc.createElement("Department");
             departments.appendChild(departmentElement);
@@ -203,26 +202,172 @@ public class XMLHelper implements IPersistence {
 
     @Override
     public Employee saveEmployee(Employee employee, long departmentId) {
-        return null;
+        docFactory = DocumentBuilderFactory.newInstance();
+        Element employeeElement = null;
+        try {
+            docBuilder = docFactory.newDocumentBuilder();
+            doc = docBuilder.parse(XMLFile);
+
+            NodeList employeeCounterNl = doc.getElementsByTagName("EmployeeCounter");
+            Element employeeCounter = (Element) employeeCounterNl.item(0);
+
+            employeeCounter.getAttributes().getNamedItem("counter").setNodeValue(String.valueOf(Integer.valueOf(employeeCounter.getAttribute("counter")) + 1));
+
+            NodeList employeesNl = doc.getElementsByTagName("Employees");
+            Element employees = (Element) employeesNl.item(0);
+
+            employeeElement = doc.createElement("Employee");
+            employees.appendChild(employeeElement);
+
+            Attr attrEmployeeId = doc.createAttribute("id");
+            attrEmployeeId.setValue(employeeCounter.getAttribute("counter"));
+            employeeElement.setAttributeNode(attrEmployeeId);
+
+            Attr attrEmployeeName = doc.createAttribute("name");
+            attrEmployeeName.setValue(employee.getName());
+            employeeElement.setAttributeNode(attrEmployeeName);
+
+            NodeList departmentsNl = doc.getElementsByTagName("Department");
+            if (departmentsNl != null) {
+                for (int i = 0; i < departmentsNl.getLength(); i++) {
+                    if (departmentsNl.item(i).getAttributes().getNamedItem("id").getNodeValue().equals(String.valueOf(departmentId))) {
+                        Element department = (Element) departmentsNl.item(i);
+                        Element dpEmployeeElement = doc.createElement("Employee");
+
+                        Attr dpEmployeeId = doc.createAttribute("id");
+                        dpEmployeeId.setValue(attrEmployeeId.getValue());
+                        dpEmployeeElement.setAttributeNode(dpEmployeeId);
+
+                        Attr dpEmployeeName = doc.createAttribute("name");
+                        dpEmployeeName.setValue(attrEmployeeName.getValue());
+                        dpEmployeeElement.setAttributeNode(dpEmployeeName);
+
+                        department.appendChild(dpEmployeeElement);
+                    }
+                }
+            }
+
+
+
+            transFactory = TransformerFactory.newInstance();
+            transformer = transFactory.newTransformer();
+            source = new DOMSource(doc);
+            result = new StreamResult(XMLFile);
+            transformer.transform(source, result);
+
+        } catch (ParserConfigurationException | SAXException | IOException | TransformerException e) {
+            e.printStackTrace();
+        }
+
+        return new Employee(Long.valueOf(employeeElement.getAttribute("id")), employeeElement.getAttribute("name"));
     }
 
     @Override
     public Employee getEmployee(long id) {
-        return null;
+        Employee em = null;
+        try {
+            docFactory = DocumentBuilderFactory.newInstance();
+            docBuilder = docFactory.newDocumentBuilder();
+            doc = docBuilder.parse(XMLFile);
+
+            NodeList list = doc.getElementsByTagName("Employee");
+            for (int i = 0; i < list.getLength(); i++) {
+                if (list.item(i).getAttributes().getNamedItem("id").getNodeValue().equals(String.valueOf(id))) {
+                    Element element = (Element) list.item(i);
+                    em = new Employee(Long.valueOf(element.getAttribute("id")), element.getAttribute("name"));
+                }
+            }
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            e.printStackTrace();
+        }
+        return em;
     }
 
     @Override
     public List<Employee> getEmployees(long id) {
-        return null;
+        List<Employee> employeesList = new ArrayList<>();
+        docFactory = DocumentBuilderFactory.newInstance();
+        try {
+            docBuilder = docFactory.newDocumentBuilder();
+            doc = docBuilder.parse(XMLFile);
+
+            NodeList nl = doc.getElementsByTagName("Department");
+            if(nl != null){
+                for(int i = 0; i < nl.getLength(); i++){
+                    Element department = (Element) nl.item(i);
+                    if(Long.valueOf(department.getAttribute("id")).equals(id)){
+                        NodeList children = department.getChildNodes();
+                        if (children != null) {
+                            for (int j = 0; j < children.getLength(); j++) {
+                                Element employeeElement = (Element) children.item(j);
+                                Employee employee = new Employee(Long.valueOf(employeeElement.getAttribute("id")), employeeElement.getAttribute("name"));
+
+                                employeesList.add(employee);
+                            }
+                        }
+                    }
+
+                }
+            }
+
+
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            e.printStackTrace();
+        }
+        return employeesList;
     }
 
     @Override
     public void updateEmployee(Employee employee) {
+        docFactory = DocumentBuilderFactory.newInstance();
+        try {
+            docBuilder = docFactory.newDocumentBuilder();
+            doc = docBuilder.parse(XMLFile);
+            NodeList nl = doc.getElementsByTagName("Employee");
+            if (nl != null) {
+                for (int i = 0; i < nl.getLength(); i++) {
+                    Element element = (Element) nl.item(i);
+                    if (element.getAttribute("id").equals(String.valueOf(employee.getId()))) {
+                        element.getAttributes().getNamedItem("id").setNodeValue(String.valueOf(employee.getId()));
+                        element.getAttributes().getNamedItem("name").setNodeValue(employee.getName());
+                    }
+                }
+            }
+            transFactory = TransformerFactory.newInstance();
+            transformer = transFactory.newTransformer();
+            source = new DOMSource(doc);
+            result = new StreamResult(XMLFile);
+            transformer.transform(source, result);
 
+
+        } catch (ParserConfigurationException | SAXException | IOException | TransformerException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void deleteEmployee(long employeeId) {
+        docFactory = DocumentBuilderFactory.newInstance();
+        try {
+            docBuilder = docFactory.newDocumentBuilder();
+            doc = docBuilder.parse(XMLFile);
+
+            NodeList nl = doc.getElementsByTagName("Employee");
+            for (int i = 0; i < nl.getLength(); i++) {
+                Element element = (Element) nl.item(i);
+                if (element.getAttribute("id").equals(String.valueOf(employeeId))) {
+                    element.getParentNode().removeChild(element);
+                }
+            }
+            transFactory = TransformerFactory.newInstance();
+            transformer = transFactory.newTransformer();
+            source = new DOMSource(doc);
+            result = new StreamResult(XMLFile);
+            transformer.transform(source, result);
+
+        } catch (ParserConfigurationException | SAXException | IOException | TransformerException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -238,21 +383,26 @@ public class XMLHelper implements IPersistence {
             docBuilder = docFactory.newDocumentBuilder();
             doc = docBuilder.newDocument();
 
+            Element dataSet = doc.createElement("DataSet");
+            doc.appendChild(dataSet);
+
             Element departmentCounter = doc.createElement("DepartmentCounter");
             Attr attrDepartmentCounter = doc.createAttribute("counter");
-            attrDepartmentCounter.setValue(String.valueOf(1));
+            attrDepartmentCounter.setValue(String.valueOf(0));
             departmentCounter.setAttributeNode(attrDepartmentCounter);
+            dataSet.appendChild(departmentCounter);
 
             Element employeeCounter = doc.createElement("EmployeeCounter");
             Attr attrEmployeeCounter = doc.createAttribute("counter");
-            attrEmployeeCounter.setValue(String.valueOf(1));
+            attrEmployeeCounter.setValue(String.valueOf(0));
             employeeCounter.setAttributeNode(attrEmployeeCounter);
+            dataSet.appendChild(employeeCounter);
 
             Element departments = doc.createElement("Departments");
-            doc.appendChild(departments);
+            dataSet.appendChild(departments);
 
             Element employees = doc.createElement("Employees");
-            doc.appendChild(employees);
+            dataSet.appendChild(employees);
 
             transFactory = TransformerFactory.newInstance();
             transformer = transFactory.newTransformer();
