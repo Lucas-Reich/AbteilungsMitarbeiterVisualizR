@@ -13,6 +13,8 @@ public class SQLiteRepository implements IPersistence {
     private SQLiteConnectionHandler connectionHandler;
 
     public SQLiteRepository(SQLiteConnectionHandler connectionHandler) {
+        SQLiteHelper.initializeDatabase(connectionHandler);
+
         this.connectionHandler = connectionHandler;
     }
 
