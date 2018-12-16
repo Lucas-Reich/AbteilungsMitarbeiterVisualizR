@@ -12,10 +12,18 @@ import java.util.List;
 public class SQLiteRepository implements IPersistence {
     private SQLiteConnectionHandler connectionHandler;
 
-    public SQLiteRepository(SQLiteConnectionHandler connectionHandler) {
+    private SQLiteRepository(SQLiteConnectionHandler connectionHandler) {
         SQLiteHelper.initializeDatabase(connectionHandler);
 
         this.connectionHandler = connectionHandler;
+    }
+
+    public static SQLiteRepository init() {
+        SQLiteConnectionHandler connectionHandler = SQLiteConnectionHandler.init();
+
+        SQLiteHelper.initializeDatabase(connectionHandler);
+
+        return new SQLiteRepository(connectionHandler);
     }
 
     @Override

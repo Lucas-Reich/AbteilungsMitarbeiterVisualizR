@@ -7,6 +7,12 @@ import java.sql.*;
 public class SQLiteConnectionHandler {
     private Connection connection = null;
 
+    private SQLiteConnectionHandler() {}
+
+    public static SQLiteConnectionHandler init() {
+        return new SQLiteConnectionHandler();
+    }
+
     int executeUpdate(String sql) {
         try {
             Statement stmt = connection.createStatement();

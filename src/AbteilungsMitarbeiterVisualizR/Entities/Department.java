@@ -14,6 +14,12 @@ public class Department {
         employees = new ArrayList<>();
     }
 
+    public static Department init(Long id, String name) {
+        long safeId = id != null ? id : -1;
+
+        return new Department(safeId, name);
+    }
+
     public Department(String name) {
         this(-1, name);
     }

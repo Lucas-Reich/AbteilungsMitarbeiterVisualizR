@@ -6,6 +6,9 @@ import AbteilungsMitarbeiterVisualizR.Entities.Employee;
 import java.util.List;
 
 public interface IPersistence {
+
+    // TODO: Add init method
+
     Department saveDepartment(Department department);
 
     Department getDepartment(long id);

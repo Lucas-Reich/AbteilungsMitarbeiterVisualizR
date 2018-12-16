@@ -15,8 +15,12 @@ public class Fachkonzept1 implements IFachkonzept {
 
     private IPersistence mPersistence;
 
-    public Fachkonzept1(IPersistence persistence) {
+    private Fachkonzept1(IPersistence persistence) {
         mPersistence = persistence;
+    }
+
+    public static Fachkonzept1 init(IPersistence persistence) {
+        return new Fachkonzept1(persistence);
     }
 
     @Override

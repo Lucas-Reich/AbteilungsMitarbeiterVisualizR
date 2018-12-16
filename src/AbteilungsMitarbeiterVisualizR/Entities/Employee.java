@@ -9,6 +9,12 @@ public class Employee {
         setName(name);
     }
 
+    public static Employee init(Long id, String name) {
+        long safeId = id != null ? id : -1;
+
+        return new Employee(safeId, name);
+    }
+
     public Employee(String name) {
         this(-1, name);
     }

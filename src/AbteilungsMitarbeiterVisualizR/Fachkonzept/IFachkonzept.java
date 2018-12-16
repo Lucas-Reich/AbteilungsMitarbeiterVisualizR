@@ -6,8 +6,10 @@ import AbteilungsMitarbeiterVisualizR.Entities.Employee;
 import java.util.List;
 
 public interface IFachkonzept {
-    String getProjectName();
 
+    // TODO: Add init method
+
+    String getProjectName();
 
     Department getDepartment(long departmentId);
 
