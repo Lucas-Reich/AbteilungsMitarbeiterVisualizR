@@ -57,7 +57,7 @@ public class XMLHelper implements IPersistence {
             for (int i = 0; i < nl.getLength(); i++) {
                 if (nl.item(i).getAttributes().getNamedItem("name").getNodeValue().equals(department.getName())) {
                     System.out.println("Department with name " + department.getName() + " already exists");
-                    //todo throw new Exception??
+                    return null;
                 }
             }
             NodeList departmentNl = doc.getElementsByTagName("Departments");

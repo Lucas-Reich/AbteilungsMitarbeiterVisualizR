@@ -6,6 +6,7 @@ import AbteilungsMitarbeiterVisualizR.Fachkonzept.Fachkonzept2;
 import AbteilungsMitarbeiterVisualizR.Fachkonzept.IFachkonzept;
 import AbteilungsMitarbeiterVisualizR.Persistence.IPersistence;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TestFachkonzept2 extends AbstractFachkonzeptTest {
@@ -18,25 +19,43 @@ public class TestFachkonzept2 extends AbstractFachkonzeptTest {
 
     @Override
     protected List<Department> getDepartmentsSortedById() {
-        // TODO implement me
-        return null;
+        return new ArrayList<Department>() {{
+            add(new Department(6, "Abteilung D"));
+            add(new Department(5, "Abteilung A"));
+            add(new Department(4, "Abteilung E"));
+            add(new Department(3, "Abteilung B"));
+            add(new Department(2, "Abteilung C"));
+            add(new Department(1, "Abteilung C"));
+        }};
     }
 
     @Override
     protected List<Department> getDepartmentsSortedByName() {
-        // TODO implement me
-        return null;
+        return new ArrayList<Department>() {{
+            add(new Department(2, "Abteilung E"));
+            add(new Department(4, "Abteilung D"));
+            add(new Department(5, "Abteilung C"));
+            add(new Department(6, "Abteilung C"));
+            add(new Department(1, "Abteilung B"));
+            add(new Department(3, "Abteilung A"));
+        }};
     }
 
     @Override
     protected List<Employee> getEmployeesSortedById() {
-        // TODO implement me
-        return null;
+        return new ArrayList<Employee>() {{
+            add(new Employee(34578, "Lucas Reich"));
+            add(new Employee(234, "Christian Schulz"));
+            add(new Employee(23, "Viktor Yezhov"));
+        }};
     }
 
     @Override
     protected List<Employee> getEmployeesSortedByName() {
-        // TODO implement me
-        return null;
+        return new ArrayList<Employee>() {{
+            add(new Employee(34578, "Viktor Yezhov"));
+            add(new Employee(23, "Lucas Reich"));
+            add(new Employee(234, "Christian Schulz"));
+        }};
     }
 }
