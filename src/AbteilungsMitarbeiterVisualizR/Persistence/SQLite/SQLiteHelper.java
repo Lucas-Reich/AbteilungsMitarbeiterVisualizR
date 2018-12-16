@@ -1,9 +1,6 @@
 package AbteilungsMitarbeiterVisualizR.Persistence.SQLite;
 
-import AbteilungsMitarbeiterVisualizR.Log;
-
 import java.io.File;
-import java.sql.*;
 
 public class SQLiteHelper {
     static final String DATABASE_NAME = "abteilungsMitarbeiterVisualizR.db";
@@ -15,8 +12,9 @@ public class SQLiteHelper {
             + "CREATE TABLE IF NOT EXISTS "
             + TABLE_DEPARTMENTS + "( "
             + DEPARTMENT_COL_ID + " INTEGER PRIMARY KEY, "
-            + DEPARTMENT_COL_NAME + " TEXT NOT NULL"
-            + ")";
+            + DEPARTMENT_COL_NAME + " TEXT NOT NULL,"
+            + "CONSTRAINT dep_name_unique UNIQUE (name)"
+            + ");";
 
     static final String TABLE_EMPLOYEES = "employee";
     static final String EMPLOYEE_COL_ID = "id";
@@ -28,9 +26,9 @@ public class SQLiteHelper {
             + EMPLOYEE_COL_ID + " INTEGER PRIMARY KEY, "
             + EMPLOYEE_COL_NAME + " TEXT NOT NULL, "
             + EMPLOYEE_COL_DEPARTMENT_ID + " INTEGER NOT NULL"
-            + ")";
+            + ");";
 
-    public static void initializeDatabase(SQLiteDatabaseHandler databaseHandler) {
+    public static void initializeDatabase(SQLiteConnectionHandler databaseHandler) {
         if (databaseExists())
             return;
 
@@ -39,9 +37,9 @@ public class SQLiteHelper {
         databaseHandler.disconnect();
     }
 
-    private static void createTables(SQLiteDatabaseHandler handler) {
-        handler.execute(CREATE_DEPARTMENTS_TABLE);
-        handler.execute(CREATE_EMPLOYEE_TABLE);
+    private static void createTables(SQLiteConnectionHandler sqLiteConnectionHandler) {
+        sqLiteConnectionHandler.execute(CREATE_DEPARTMENTS_TABLE);
+        sqLiteConnectionHandler.execute(CREATE_EMPLOYEE_TABLE);
     }
 
     private static boolean databaseExists() {

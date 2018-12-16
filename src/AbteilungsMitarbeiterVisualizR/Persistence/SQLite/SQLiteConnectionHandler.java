@@ -4,15 +4,17 @@ import AbteilungsMitarbeiterVisualizR.Log;
 
 import java.sql.*;
 
-public class SQLiteDatabaseHandler {
+public class SQLiteConnectionHandler {
     private Connection connection = null;
 
     int executeUpdate(String sql) {
         try {
-            return connection
-                    .createStatement()
-                    .executeUpdate(sql);
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate(sql);
+
+            return extractFirstId(stmt);
         } catch (SQLException e) {
+            Log.error(e.getMessage(), e);
             return -1;
         }
     }
@@ -23,6 +25,7 @@ public class SQLiteDatabaseHandler {
                     .createStatement()
                     .executeQuery(sql);
         } catch (SQLException e) {
+            Log.error(e.getMessage(), e);
             return null;
         }
     }
@@ -33,7 +36,7 @@ public class SQLiteDatabaseHandler {
                     .createStatement()
                     .execute(sql);
         } catch (SQLException e) {
-
+            Log.error(e.getMessage(), e);
             return false;
         }
     }
@@ -78,5 +81,18 @@ public class SQLiteDatabaseHandler {
 
     private String getDatabaseDir() {
         return System.getProperty("user.dir") + "/assets/SQLite";
+    }
+
+    private int extractFirstId(Statement stmt) {
+        try {
+
+            ResultSet keys = stmt.getGeneratedKeys();
+            keys.next();
+
+            return (int) keys.getLong(1);
+        } catch (SQLException e) {
+
+            return -1;
+        }
     }
 }

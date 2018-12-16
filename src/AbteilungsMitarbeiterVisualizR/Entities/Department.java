@@ -38,6 +38,10 @@ public class Department {
         employees.add(employee);
     }
 
+    public void addEmployees(List<Employee> employees) {
+        this.employees.addAll(employees);
+    }
+
     public List<Employee> getEmployees() {
         return employees;
     }

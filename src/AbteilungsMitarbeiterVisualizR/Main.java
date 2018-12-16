@@ -1,24 +1,19 @@
 package AbteilungsMitarbeiterVisualizR;
 
-import AbteilungsMitarbeiterVisualizR.Entities.Department;
 import AbteilungsMitarbeiterVisualizR.Entities.Employee;
-import AbteilungsMitarbeiterVisualizR.Persistence.XML.XMLHelper;
+import AbteilungsMitarbeiterVisualizR.Persistence.SQLite.SQLiteConnectionHandler;
+import AbteilungsMitarbeiterVisualizR.Persistence.SQLite.SQLiteHelper;
+import AbteilungsMitarbeiterVisualizR.Persistence.SQLite.SQLiteRepository;
 
 public class Main {
     public static void main(String[] args) {
         System.out.println("Hello World!");
 
-        XMLHelper repo = new XMLHelper();
+        SQLiteHelper.initializeDatabase(new SQLiteConnectionHandler());
 
-        Department dep = repo.saveDepartment(new Department("Schule"));
+        SQLiteRepository sqliteRepo = new SQLiteRepository(new SQLiteConnectionHandler());
+        Employee test = sqliteRepo.saveEmployee(new Employee("Test Person"), 1);
 
-        Employee chris = repo.saveEmployee(new Employee("Christian"), dep.getId());
-        Employee luc = repo.saveEmployee(new Employee("Lucas"), dep.getId());
-        Employee vik = repo.saveEmployee(new Employee("Viktor"), dep.getId());
-
-        vik.setName("Nicht Viktor");
-        repo.updateEmployee(vik);
-
-        Log.console(repo.getEmployee(vik.getId()).getName());
+        Log.console("Stop for a moment");
     }
 }
