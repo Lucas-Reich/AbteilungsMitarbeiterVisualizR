@@ -12,9 +12,9 @@ public interface IPersistence {
 
     List<Department> getAllDepartments();
 
-    void updateDepartment(Department department);//TODO: Should we return bool?
+    void updateDepartment(Department department);
 
-    void deleteDepartment(long departmentId);//TODO: Should we return bool?
+    void deleteDepartment(long departmentId);
 
 
     Employee saveEmployee(Employee employee, long departmentId);

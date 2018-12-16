@@ -6,8 +6,7 @@ import AbteilungsMitarbeiterVisualizR.Entities.Employee;
 import java.util.List;
 
 public interface IFachkonzept {
-    // TODO refine me
-    String getProjectName(); // TODO Do we display the Project name? if not remove this function
+    String getProjectName();
 
 
     Department getDepartment(long departmentId);

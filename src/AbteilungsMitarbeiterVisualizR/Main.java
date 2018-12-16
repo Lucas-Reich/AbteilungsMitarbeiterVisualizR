@@ -1,26 +1,24 @@
 package AbteilungsMitarbeiterVisualizR;
 
 import AbteilungsMitarbeiterVisualizR.Entities.Department;
-import AbteilungsMitarbeiterVisualizR.Persistence.SQLite.SQLiteDatabaseHandler;
-import AbteilungsMitarbeiterVisualizR.Persistence.SQLite.SQLiteHelper;
-import AbteilungsMitarbeiterVisualizR.Persistence.SQLite.SQLiteRepository;
-import AbteilungsMitarbeiterVisualizR.UI.GUI;
+import AbteilungsMitarbeiterVisualizR.Entities.Employee;
+import AbteilungsMitarbeiterVisualizR.Persistence.XML.XMLHelper;
 
 public class Main {
-    // TODO refine me
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         System.out.println("Hello World!");
 
-        SQLiteHelper.initializeDatabase(new SQLiteDatabaseHandler());
+        XMLHelper repo = new XMLHelper();
 
-        SQLiteRepository repo = new SQLiteRepository(new SQLiteDatabaseHandler());
-        repo.saveDepartment(new Department("Abteilung 1"));
+        Department dep = repo.saveDepartment(new Department("Schule"));
 
-        Department dep = repo.getDepartment(1);
+        Employee chris = repo.saveEmployee(new Employee("Christian"), dep.getId());
+        Employee luc = repo.saveEmployee(new Employee("Lucas"), dep.getId());
+        Employee vik = repo.saveEmployee(new Employee("Viktor"), dep.getId());
 
-        // Example, does not have to look like this
-        GUI gui = new GUI(repo);
-        gui.show();
+        vik.setName("Nicht Viktor");
+        repo.updateEmployee(vik);
 
+        Log.console(repo.getEmployee(vik.getId()).getName());
     }
 }
