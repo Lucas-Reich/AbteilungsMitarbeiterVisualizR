@@ -35,7 +35,7 @@ public class XMLHelper implements IPersistence {
     private StreamResult result = null;
     private Path filePath = null;
 
-    private XMLHelper() {};
+    private XMLHelper() {}
 
     public static XMLHelper init() {
         XMLHelper xmlHelper = new XMLHelper();

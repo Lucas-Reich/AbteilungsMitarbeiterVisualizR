@@ -12,8 +12,7 @@ import java.util.List;
 public class SQLiteRepository implements IPersistence {
     private SQLiteConnectionHandler connectionHandler;
 
-    private SQLiteRepository() {
-    }
+    private SQLiteRepository() {}
 
     public static SQLiteRepository init() {
         SQLiteConnectionHandler connectionHandler = SQLiteConnectionHandler.init();
