@@ -13,9 +13,7 @@ public class TestFachkonzept1 extends AbstractFachkonzeptTest {
 
     @Override
     protected IFachkonzept createFachkonzept(IPersistence persistence) {
-        return new Fachkonzept1(
-                persistence
-        );
+        return Fachkonzept1.init(persistence);
     }
 
     @Override
