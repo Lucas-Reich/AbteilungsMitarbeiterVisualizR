@@ -8,20 +8,15 @@ public class Department {
     private String name;
     private List<Employee> employees;
 
-    public Department(long id, String name) {
-        setId(id);
-        setName(name);
-        employees = new ArrayList<>();
-    }
+    private Department() { }
 
     public static Department init(Long id, String name) {
-        long safeId = id != null ? id : -1;
+        Department department = new Department();
+        department.setId(null != id ? id : -1);
+        department.setName(name);
+        department.employees = new ArrayList<>();
 
-        return new Department(safeId, name);
-    }
-
-    public Department(String name) {
-        this(-1, name);
+        return department;
     }
 
     public long getId() {

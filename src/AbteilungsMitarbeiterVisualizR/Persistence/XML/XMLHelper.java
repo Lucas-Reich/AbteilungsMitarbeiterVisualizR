@@ -23,8 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class XMLHelper implements IPersistence {
-
-    static final String XML_FILE_NAME = "abteilungsMitarbeiterVisualizR.xml";
+    private static final String XML_FILE_NAME = "abteilungsMitarbeiterVisualizR.xml";
 
     private DocumentBuilderFactory docFactory = null;
     private DocumentBuilder docBuilder = null;
@@ -36,12 +35,17 @@ public class XMLHelper implements IPersistence {
     private StreamResult result = null;
     private Path filePath = null;
 
-    public XMLHelper() {
-        if (!checkXMLFileExists()) {
-            initializeXmlFile();
+    private XMLHelper() {};
+
+    public static XMLHelper init() {
+        XMLHelper xmlHelper = new XMLHelper();
+        if (!xmlHelper.checkXMLFileExists()) {
+            xmlHelper.initializeXmlFile();
         } else {
-            XMLFile = new File(String.valueOf(filePath));
+            xmlHelper.XMLFile = new File(String.valueOf(xmlHelper.filePath));
         }
+
+        return xmlHelper;
     }
 
     @Override
@@ -90,7 +94,7 @@ public class XMLHelper implements IPersistence {
             e.printStackTrace();
         }
 
-        return new Department(Long.valueOf(departmentElement.getAttribute("id")), departmentElement.getAttribute("name"));
+        return Department.init(Long.valueOf(departmentElement.getAttribute("id")), departmentElement.getAttribute("name"));
     }
 
     @Override
@@ -109,7 +113,7 @@ public class XMLHelper implements IPersistence {
                 }
             }
             if (element != null) {
-                dp = new Department(Long.valueOf(element.getAttribute("id")), element.getAttribute("name"));
+                dp = Department.init(Long.valueOf(element.getAttribute("id")), element.getAttribute("name"));
                 if (element.getChildNodes() != null) {
                     addEmployeesToDepartment(element, dp);
                 }
@@ -131,7 +135,7 @@ public class XMLHelper implements IPersistence {
             if (nl != null) {
                 for (int i = 0; i < nl.getLength(); i++) {
                     Element element = (Element) nl.item(i);
-                    Department dp = new Department(Long.valueOf(element.getAttribute("id")), element.getAttribute("name"));
+                    Department dp = Department.init(Long.valueOf(element.getAttribute("id")), element.getAttribute("name"));
                     if (element.getChildNodes() != null) {
                         addEmployeesToDepartment(element, dp);
                     }
@@ -259,7 +263,7 @@ public class XMLHelper implements IPersistence {
             e.printStackTrace();
         }
 
-        return new Employee(Long.valueOf(employeeElement.getAttribute("id")), employeeElement.getAttribute("name"));
+        return Employee.init(Long.valueOf(employeeElement.getAttribute("id")), employeeElement.getAttribute("name"));
     }
 
     @Override
@@ -274,7 +278,7 @@ public class XMLHelper implements IPersistence {
             for (int i = 0; i < list.getLength(); i++) {
                 if (list.item(i).getAttributes().getNamedItem("id").getNodeValue().equals(String.valueOf(id))) {
                     Element element = (Element) list.item(i);
-                    em = new Employee(Long.valueOf(element.getAttribute("id")), element.getAttribute("name"));
+                    em = Employee.init(Long.valueOf(element.getAttribute("id")), element.getAttribute("name"));
                 }
             }
         } catch (ParserConfigurationException | SAXException | IOException e) {
@@ -300,7 +304,7 @@ public class XMLHelper implements IPersistence {
                         if (children != null) {
                             for (int j = 0; j < children.getLength(); j++) {
                                 Element employeeElement = (Element) children.item(j);
-                                Employee employee = new Employee(Long.valueOf(employeeElement.getAttribute("id")), employeeElement.getAttribute("name"));
+                                Employee employee = Employee.init(Long.valueOf(employeeElement.getAttribute("id")), employeeElement.getAttribute("name"));
 
                                 employeesList.add(employee);
                             }
@@ -423,7 +427,7 @@ public class XMLHelper implements IPersistence {
         NodeList childNodes = element.getChildNodes();
         for (int i = 0; i < childNodes.getLength(); i++) {
             Element childElement = (Element) childNodes.item(i);
-            Employee em = new Employee(Long.valueOf(childElement.getAttribute("id")), childElement.getAttribute("name"));
+            Employee em = Employee.init(Long.valueOf(childElement.getAttribute("id")), childElement.getAttribute("name"));
             department.addEmployee(em);
         }
     }

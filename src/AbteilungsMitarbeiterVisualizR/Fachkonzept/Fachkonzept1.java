@@ -12,15 +12,15 @@ import java.util.List;
  */
 public class Fachkonzept1 implements IFachkonzept {
     private static final String PROJECT_NAME = "AbteilungsMitarbeiterVisualizR";
-
     private IPersistence mPersistence;
 
-    private Fachkonzept1(IPersistence persistence) {
-        mPersistence = persistence;
-    }
+    private Fachkonzept1() { }
 
     public static Fachkonzept1 init(IPersistence persistence) {
-        return new Fachkonzept1(persistence);
+        Fachkonzept1 fachkonzept1 = new Fachkonzept1();
+        fachkonzept1.mPersistence = persistence;
+
+        return fachkonzept1;
     }
 
     @Override
@@ -49,7 +49,7 @@ public class Fachkonzept1 implements IFachkonzept {
 
     @Override
     public void saveDepartment(String departmentName) {
-        Department department = new Department(departmentName);
+        Department department = Department.init(null, departmentName);
 
         mPersistence.saveDepartment(department);
     }
@@ -61,7 +61,7 @@ public class Fachkonzept1 implements IFachkonzept {
 
     @Override
     public void updateDepartmentName(String name, long departmentId) {
-        Department updatedDepartment = new Department(
+        Department updatedDepartment = Department.init(
                 departmentId,
                 name
         );
@@ -90,7 +90,7 @@ public class Fachkonzept1 implements IFachkonzept {
 
     @Override
     public void saveNewEmployee(String employeeName, long departmentId) {
-        Employee employee = new Employee(employeeName);
+        Employee employee = Employee.init(null, employeeName);
 
         mPersistence.saveEmployee(employee, departmentId);
     }
@@ -102,7 +102,7 @@ public class Fachkonzept1 implements IFachkonzept {
 
     @Override
     public void updateEmployeeName(String name, long employeeId) {
-        Employee updatedEmployee = new Employee(employeeId, name);
+        Employee updatedEmployee = Employee.init(employeeId, name);
 
         mPersistence.updateEmployee(updatedEmployee);
     }

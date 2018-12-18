@@ -14,8 +14,13 @@ public class Fachkonzept2 implements IFachkonzept {
     private static final String PROJECT_NAME = "AbteilungsMitarbeiterVisualizR";
     private IPersistence mPersistence;
 
-    public Fachkonzept2(IPersistence persistence) {
-        mPersistence = persistence;
+    private Fachkonzept2() { }
+
+    public static Fachkonzept2 init(IPersistence persistence) {
+        Fachkonzept2 fachkonzept2 = new Fachkonzept2();
+        fachkonzept2.mPersistence = persistence;
+
+        return fachkonzept2;
     }
 
     @Override
@@ -43,9 +48,9 @@ public class Fachkonzept2 implements IFachkonzept {
 
     @Override
     public void saveDepartment(String departmentName) {
-            Department department = new Department(departmentName);
+        Department department = Department.init(null, departmentName);
 
-            mPersistence.saveDepartment(department);
+        mPersistence.saveDepartment(department);
     }
 
     @Override
@@ -55,7 +60,10 @@ public class Fachkonzept2 implements IFachkonzept {
 
     @Override
     public void updateDepartmentName(String name, long departmentId) {
-        Department updatedDepartment = new Department(departmentId, name);
+        Department updatedDepartment = Department.init(
+                departmentId,
+                name
+        );
 
         mPersistence.updateDepartment(updatedDepartment);
     }
@@ -80,7 +88,7 @@ public class Fachkonzept2 implements IFachkonzept {
 
     @Override
     public void saveNewEmployee(String employeeName, long departmentId) {
-        Employee employee = new Employee(employeeName);
+        Employee employee = Employee.init(null, employeeName);
 
         mPersistence.saveEmployee(employee, departmentId);
     }
@@ -92,7 +100,7 @@ public class Fachkonzept2 implements IFachkonzept {
 
     @Override
     public void updateEmployeeName(String name, long employeeId) {
-        Employee updatedEmployee = new Employee(employeeId, name);
+        Employee updatedEmployee = Employee.init(employeeId, name);
 
         mPersistence.updateEmployee(updatedEmployee);
     }

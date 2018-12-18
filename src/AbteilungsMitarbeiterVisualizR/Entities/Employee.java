@@ -4,19 +4,14 @@ public class Employee {
     private long id;
     private String name;
 
-    public Employee(long id, String name) {
-        setId(id);
-        setName(name);
-    }
+    private Employee() {}
 
     public static Employee init(Long id, String name) {
-        long safeId = id != null ? id : -1;
+        Employee employee = new Employee();
+        employee.setId(null != id ? id : -1);
+        employee.setName(name);
 
-        return new Employee(safeId, name);
-    }
-
-    public Employee(String name) {
-        this(-1, name);
+        return employee;
     }
 
     public long getId() {

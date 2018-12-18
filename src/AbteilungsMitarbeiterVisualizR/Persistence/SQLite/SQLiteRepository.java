@@ -12,18 +12,17 @@ import java.util.List;
 public class SQLiteRepository implements IPersistence {
     private SQLiteConnectionHandler connectionHandler;
 
-    private SQLiteRepository(SQLiteConnectionHandler connectionHandler) {
-        SQLiteHelper.initializeDatabase(connectionHandler);
-
-        this.connectionHandler = connectionHandler;
+    private SQLiteRepository() {
     }
 
     public static SQLiteRepository init() {
         SQLiteConnectionHandler connectionHandler = SQLiteConnectionHandler.init();
-
         SQLiteHelper.initializeDatabase(connectionHandler);
 
-        return new SQLiteRepository(connectionHandler);
+        SQLiteRepository repository = new SQLiteRepository();
+        repository.connectionHandler = connectionHandler;
+
+        return repository;
     }
 
     @Override
@@ -38,7 +37,7 @@ public class SQLiteRepository implements IPersistence {
         int departmentId = connectionHandler.executeUpdate(insertQuery);
         connectionHandler.disconnect();
 
-        return new Department(departmentId, dep.getName());
+        return Department.init((long) departmentId, dep.getName());
     }
 
     @Override
@@ -107,7 +106,7 @@ public class SQLiteRepository implements IPersistence {
         int employeeId = connectionHandler.executeUpdate(insertQuery);
         connectionHandler.disconnect();
 
-        return new Employee(employeeId, emp.getName());
+        return Employee.init((long) employeeId, emp.getName());
     }
 
     @Override
@@ -176,7 +175,7 @@ public class SQLiteRepository implements IPersistence {
         try {
             while (resultSet.next()) {
 
-                Department department = new Department(
+                Department department = Department.init(
                         resultSet.getLong(SQLiteHelper.DEPARTMENT_COL_ID),
                         resultSet.getString(SQLiteHelper.DEPARTMENT_COL_NAME)
                 );
@@ -212,7 +211,7 @@ public class SQLiteRepository implements IPersistence {
 
     private Department resultSetToDepartment(ResultSet resultSet) {
         try {
-            Department department = new Department(
+            Department department = Department.init(
                     resultSet.getLong(SQLiteHelper.DEPARTMENT_COL_ID),
                     resultSet.getString(SQLiteHelper.DEPARTMENT_COL_NAME)
             );
@@ -232,7 +231,7 @@ public class SQLiteRepository implements IPersistence {
 
     private Employee resultSetToEmployee(ResultSet resultSet) {
         try {
-            return new Employee(
+            return Employee.init(
                     resultSet.getLong(SQLiteHelper.EMPLOYEE_COL_ID),
                     resultSet.getString(SQLiteHelper.EMPLOYEE_COL_NAME)
             );

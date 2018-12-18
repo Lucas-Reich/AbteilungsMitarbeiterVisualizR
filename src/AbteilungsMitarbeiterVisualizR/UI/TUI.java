@@ -3,12 +3,8 @@ package AbteilungsMitarbeiterVisualizR.UI;
 import AbteilungsMitarbeiterVisualizR.Entities.Department;
 import AbteilungsMitarbeiterVisualizR.Entities.Employee;
 import AbteilungsMitarbeiterVisualizR.Fachkonzept.IFachkonzept;
-import AbteilungsMitarbeiterVisualizR.Fachkonzept.Fachkonzept1;
 import AbteilungsMitarbeiterVisualizR.Log;
-import AbteilungsMitarbeiterVisualizR.Persistence.IPersistence;
-import sun.management.snmp.jvmmib.EnumJvmMemPoolCollectThreshdSupport;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,9 +12,14 @@ public class TUI {
     private IFachkonzept mFachkonzept;
     private Scanner mScanner;
 
-    public TUI(IPersistence persistence) {
-        mFachkonzept = Fachkonzept1.init(persistence);
-        mScanner = new Scanner(System.in);
+    private TUI() { }
+
+    public static TUI init(IFachkonzept fachkonzept) {
+        TUI tui = new TUI();
+        tui.mFachkonzept = fachkonzept;
+        tui.mScanner = new Scanner(System.in);
+
+        return tui;
     }
 
     public void show() {

@@ -12,7 +12,7 @@ import java.util.List;
 public class TestFachkonzept2 extends AbstractFachkonzeptTest {
     @Override
     protected IFachkonzept createFachkonzept(IPersistence persistence) {
-        return new Fachkonzept2(
+        return Fachkonzept2.init(
                 persistence
         );
     }
@@ -20,42 +20,42 @@ public class TestFachkonzept2 extends AbstractFachkonzeptTest {
     @Override
     protected List<Department> getDepartmentsSortedById() {
         return new ArrayList<Department>() {{
-            add(new Department(6, "Abteilung D"));
-            add(new Department(5, "Abteilung A"));
-            add(new Department(4, "Abteilung E"));
-            add(new Department(3, "Abteilung B"));
-            add(new Department(2, "Abteilung C"));
-            add(new Department(1, "Abteilung C"));
+            add(Department.init(6L, "Abteilung D"));
+            add(Department.init(5L, "Abteilung A"));
+            add(Department.init(4L, "Abteilung E"));
+            add(Department.init(3L, "Abteilung B"));
+            add(Department.init(2L, "Abteilung C"));
+            add(Department.init(1L, "Abteilung C"));
         }};
     }
 
     @Override
     protected List<Department> getDepartmentsSortedByName() {
         return new ArrayList<Department>() {{
-            add(new Department(2, "Abteilung E"));
-            add(new Department(4, "Abteilung D"));
-            add(new Department(5, "Abteilung C"));
-            add(new Department(6, "Abteilung C"));
-            add(new Department(1, "Abteilung B"));
-            add(new Department(3, "Abteilung A"));
+            add(Department.init(2L, "Abteilung E"));
+            add(Department.init(4L, "Abteilung D"));
+            add(Department.init(5L, "Abteilung C"));
+            add(Department.init(6L, "Abteilung C"));
+            add(Department.init(1L, "Abteilung B"));
+            add(Department.init(3L, "Abteilung A"));
         }};
     }
 
     @Override
     protected List<Employee> getEmployeesSortedById() {
         return new ArrayList<Employee>() {{
-            add(new Employee(34578, "Lucas Reich"));
-            add(new Employee(234, "Christian Schulz"));
-            add(new Employee(23, "Viktor Yezhov"));
+            add(Employee.init(34578L, "Lucas Reich"));
+            add(Employee.init(234L, "Christian Schulz"));
+            add(Employee.init(23L, "Viktor Yezhov"));
         }};
     }
 
     @Override
     protected List<Employee> getEmployeesSortedByName() {
         return new ArrayList<Employee>() {{
-            add(new Employee(34578, "Viktor Yezhov"));
-            add(new Employee(23, "Lucas Reich"));
-            add(new Employee(234, "Christian Schulz"));
+            add(Employee.init(34578L, "Viktor Yezhov"));
+            add(Employee.init(23L, "Lucas Reich"));
+            add(Employee.init(234L, "Christian Schulz"));
         }};
     }
 }

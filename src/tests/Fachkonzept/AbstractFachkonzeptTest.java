@@ -43,7 +43,7 @@ public abstract class AbstractFachkonzeptTest {
 
     @Test
     public void testGetDepartment() {
-        Department expectedDepartment = new Department(776, "IT");
+        Department expectedDepartment = Department.init(776L, "IT");
 
         when(mPersistence.getDepartment(anyLong())).thenReturn(expectedDepartment);
 
@@ -110,7 +110,7 @@ public abstract class AbstractFachkonzeptTest {
 
     @Test
     public void testGetEmployee() {
-        Employee expectedEmployee = new Employee(94, "Lucas Reich");
+        Employee expectedEmployee = Employee.init(94L, "Lucas Reich");
 
         when(mPersistence.getEmployee(anyLong())).thenReturn(expectedEmployee);
 
