@@ -1,7 +1,5 @@
-package tests.Fachkonzept;
+package AbteilungsMitarbeiterVisualizR.UI.GUI;
 
-import AbteilungsMitarbeiterVisualizR.Entities.Department;
-import AbteilungsMitarbeiterVisualizR.Entities.Employee;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

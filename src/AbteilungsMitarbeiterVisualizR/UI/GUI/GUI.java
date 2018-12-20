@@ -1,8 +1,6 @@
-package AbteilungsMitarbeiterVisualizR.UI;
+package AbteilungsMitarbeiterVisualizR.UI.GUI;
 
 import AbteilungsMitarbeiterVisualizR.Fachkonzept.IFachkonzept;
-import AbteilungsMitarbeiterVisualizR.Fachkonzept.Fachkonzept1;
-import AbteilungsMitarbeiterVisualizR.Persistence.IPersistence;
 
 public class GUI {
     private IFachkonzept mFachkonzept;

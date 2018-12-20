@@ -1,4 +1,4 @@
-package AbteilungsMitarbeiterVisualizR.UI;
+package AbteilungsMitarbeiterVisualizR.UI.TUI;
 
 import AbteilungsMitarbeiterVisualizR.Entities.Department;
 import AbteilungsMitarbeiterVisualizR.Entities.Employee;

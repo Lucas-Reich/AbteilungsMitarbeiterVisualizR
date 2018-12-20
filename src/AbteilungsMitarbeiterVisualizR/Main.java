@@ -1,10 +1,8 @@
 package AbteilungsMitarbeiterVisualizR;
 
-import AbteilungsMitarbeiterVisualizR.Fachkonzept.Fachkonzept1;
 import AbteilungsMitarbeiterVisualizR.Fachkonzept.Fachkonzept2;
-import AbteilungsMitarbeiterVisualizR.Persistence.SQLite.SQLiteRepository;
 import AbteilungsMitarbeiterVisualizR.Persistence.XML.XMLHelper;
-import AbteilungsMitarbeiterVisualizR.UI.TUI;
+import AbteilungsMitarbeiterVisualizR.UI.TUI.TUI;
 
 public class Main {
     public static void main(String[] args) {
