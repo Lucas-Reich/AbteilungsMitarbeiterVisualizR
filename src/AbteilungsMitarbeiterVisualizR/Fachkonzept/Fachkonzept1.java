@@ -40,7 +40,7 @@ public class Fachkonzept1 implements IFachkonzept {
         departments.sort(new Comparator<Department>() {
             @Override
             public int compare(Department o1, Department o2) {
-                return o1.getName().compareTo(o2.getName());
+                return o1.getName().toLowerCase().compareTo(o2.getName().toLowerCase());
             }
         });
 
@@ -81,7 +81,7 @@ public class Fachkonzept1 implements IFachkonzept {
         employees.sort(new Comparator<Employee>() {
             @Override
             public int compare(Employee o1, Employee o2) {
-                return Character.compare(o1.getName().charAt(0), o2.getName().charAt(0));
+                return Character.compare(Character.toLowerCase(o1.getName().charAt(0)), Character.toLowerCase(o2.getName().charAt(0)));
             }
         });
 

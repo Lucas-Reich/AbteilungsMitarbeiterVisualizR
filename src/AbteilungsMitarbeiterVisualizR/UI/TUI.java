@@ -98,9 +98,9 @@ public class TUI {
                 Log.console("Bitte geben Sie die ID der Abteilung an:");
                 long id4 = Long.valueOf(mScanner.nextLine());
 
-                Department dep3 = mFachkonzept.getDepartment(id4);
+//                Department dep3 = mFachkonzept.getDepartment(id4);
 
-                for (Employee emp : dep3.getEmployees()) {
+                for (Employee emp : mFachkonzept.getEmployees(id4)) {
                     employeeToConsole(emp);
                 }
                 break;
