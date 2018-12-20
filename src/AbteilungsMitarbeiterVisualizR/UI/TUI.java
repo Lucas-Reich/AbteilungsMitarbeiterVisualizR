@@ -24,6 +24,7 @@ public class TUI {
 
     public void show() {
         do {
+            try{
             Log.console("Eine Abteilung speichern (a)");
             Log.console("Eine Abteilung auslesen (b)");
             Log.console("Eine Abteilung bearbeiten (c)");
@@ -48,6 +49,9 @@ public class TUI {
             }
 
             readAction(input.charAt(0));
+            }catch(Exception e){
+                Log.console("Fehlerhafte Eingabe");
+            }
         } while(true);
     }
 
@@ -154,9 +158,14 @@ public class TUI {
             case 'k':
                 List<Department> deps = mFachkonzept.getDepartments();
 
-                for (Department dep4 : deps) {
-                    departmentToConsole(dep4);
+                if(deps.isEmpty()){
+                    Log.console("Die Liste der Abteilungen ist leer.");
+                }else{
+                    for (Department dep4 : deps) {
+                        departmentToConsole(dep4);
+                    }
                 }
+
                 break;
             default:
                 Log.console("Aktion ist nicht registriert!");
